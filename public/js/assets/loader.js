@@ -1,0 +1,1 @@
+window.addEventListener("load",function(){document.body.removeAttribute("class");var l=document.querySelector("loader");if(l){var a=l.animate([{opacity:1},{opacity:0}],{duration:200,fill:"forwards"});a.onfinish=function(){l.remove()}}});

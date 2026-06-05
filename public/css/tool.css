@@ -1,0 +1,133 @@
+.make-editable {
+   width: auto;
+   color: #495057;
+   line-height: 1rem;
+   padding: 0.125rem 0.5rem;
+   font-size: 0.875rem;
+   border: 1px solid #054F9D;
+   border-radius: .375rem;
+   background-color: #fff;
+   display: inline-block;
+   transition: border-color 0.15s ease-in-out;
+}
+.make-editable:focus {
+   outline: none !important;
+   box-shadow: none !important;
+}
+.make-sm {
+   font-size: 0.75rem;
+   padding: 0.15rem 0.45rem;
+}
+.shake-it {
+   color: #dc3545 !important;
+   border-color: #dc3545 !important;
+   animation: shake-it 0.3s ease;
+}
+@keyframes shake-it {
+   0% {
+      transform: translateX(0);
+   }
+   20% {
+      transform: translateX(-4px);
+   }
+   40% {
+      transform: translateX(4px);
+   }
+   60% {
+      transform: translateX(-4px);
+   }
+   80% {
+      transform: translateX(4px);
+   }
+   100% {
+      transform: translateX(0);
+   }
+}
+.make-error {
+   line-height: 1;
+   font-size: 0.875rem;
+   white-space: nowrap;
+   display: inline-block;
+   vertical-align: middle;
+   padding: 0.125rem 0.375rem;
+}
+/* input reset */
+
+.reset-wrap {
+   position: relative;
+}
+.reset-btn {
+   color: #dc3545;
+   top: 50%;
+   border: 0;
+   opacity: 0.5;
+   left: -20px;
+   position: absolute;
+   background: transparent;
+   transform: translateY(-50%);
+   transition: opacity 0.15s ease;
+}
+.reset-btn:hover, .reset-btn:focus {
+   opacity: 1;
+}
+/* menu dropdown */
+
+.menu-wrap {
+   position: relative;
+}
+.menu-dropdown {
+   top: 0;
+   left: 0;
+   display: none;
+   position: absolute;
+   z-index: 1055;
+   width: max-content;
+   min-width: 180px;
+   padding: 6px;
+   font-size: 14px;
+   background: #fff;
+   border: 1px solid #dee2e6;
+   border-radius: 20px;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.menu-dropdown.active {
+   display: block;
+}
+.menu-link {
+   gap: 8px;
+   border: 0;
+   text-align: left;
+   width: 100%;
+   display: flex;
+   cursor: pointer;
+   align-items: center;
+   color: #343a40;
+   background: none;
+   padding: 6px 10px;
+   border-radius: 14px;
+}
+.menu-link:hover {
+   background: #f5f5f5;
+}
+.menu-link.danger {
+   color: #e53935;
+}
+.menu-link.danger:hover {
+   background: rgba(229, 57, 53, .12);
+}
+.menu-link.success {
+   color: #43a047;
+}
+.menu-link.success:hover {
+   background: rgba(67, 160, 71, .12);
+}
+.menu-link.warning {
+   color: #fb8c00;
+}
+.menu-link.warning:hover {
+   background: rgba(251, 140, 0, .12);
+}
+.menu-divider {
+   margin: 4px 0;
+   border-top: 1px solid #ececec;
+}
