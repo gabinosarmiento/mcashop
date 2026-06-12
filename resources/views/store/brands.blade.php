@@ -19,7 +19,7 @@
                 <div id="letter-{{ $key }}" class="grid grid-brands">
                     @foreach($brands as $brand)
                     <a id="select-brand-{{ $brand['id'] }}" href="{{ route('marca', [$brand['id'], str($brand['name'])->slug()]) }}" class="img-container item-scale" data-id="{{ $brand['id'] }}" data-name="{{ $brand['name'] }}">
-                        <img src="{{ asset("images/{$brand['image']}") }}" class="img-fluid img-loading rounded-4" alt="{{ $brand['name'] }}"/>
+                        <img src="{{ asset($brand['image']) }}" class="img-fluid img-loading rounded-4" alt="{{ $brand['name'] }}"/>
                     </a>
                     @endforeach
                 </div>

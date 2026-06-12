@@ -15,8 +15,7 @@
    font-size: 14px;
    display: block;
 }
-.overlap,
-.backdrop {
+.overlap, .backdrop {
    top: 0;
    right: 0;
    bottom: 0;
@@ -26,47 +25,40 @@
    opacity: 0;
    position: fixed;
    transition: 0.5s;
-   background-color: #ffffff99;
+   background-color: #fffFFF99
 }
 .overlap {
    left: 100%;
    background-color: transparent;
 }
-.overlap-wrap,
-.overlap-wrap-lg,
-.overlap-wrap-md,
-.overlap-wrap-sm,
-.overlap-wrap-xs {
+.overlap-wrap, .overlap-wrap-lg, .overlap-wrap-md, .overlap-wrap-sm, .overlap-wrap-xs {
    height: 100%;
    display: flex;
    overflow: auto;
    position: relative;
    flex-direction: column;
-   background-color: #fff;
+   background-color: #fff
 }
-.overlap-wrap-lg,
-.overlap-wrap-md,
-.overlap-wrap-sm,
-.overlap-wrap-xs {
+.overlap-wrap-lg, .overlap-wrap-md, .overlap-wrap-sm, .overlap-wrap-xs {
    margin-left: auto;
-   border-top-left-radius: 10px;
-   border-bottom-left-radius: 10px;
-   box-shadow: 0 0 50px #00000033;
+   border-top-left-radius: 30px;
+   border-bottom-left-radius: 30px;
+   box-shadow: 0 0 50px #00000033
 }
 .overlap-wrap {
-   width: 100%;
+   width: 100%
 }
 .overlap-wrap-lg {
-   width: 80%;
+   width: 80%
 }
 .overlap-wrap-md {
-   width: 60%;
+   width: 60%
 }
 .overlap-wrap-sm {
-   width: 50%;
+   width: 50%
 }
 .overlap-wrap-xs {
-   width: 40%;
+   width: 40%
 }
 .overlap-header {
    color: #066ac4;
@@ -74,46 +66,44 @@
    font-weight: 400;
    text-align: center;
    padding-top: 30px;
-   padding-inline: 40px;
+   padding-inline: 40px
 }
 .overlap-body {
    flex: 1;
-   padding: 30px 40px;
+   padding: 30px 40px
 }
 .overlap-payment {
-   padding: 30px;
+   padding: 30px
 }
 .overlap-footer {
    padding-bottom: 30px;
-   padding-inline: 40px;
+   padding-inline: 40px
 }
 .overlap-close {
    width: 50px;
    height: 50px;
    cursor: pointer;
    margin: 0 auto;
-   transition: 0.2s;
-   background: url(assets/close.svg) center no-repeat;
+   transition: .2s;
+   background: url(assets/close.svg) center no-repeat
 }
 .overlap-close:hover {
-   transform: rotate(90deg);
+   transform: rotate(90deg)
 }
 .overlap-open {
-   overflow: hidden;
+   overflow: hidden
 }
-.backdrop-showing,
-.overlap-showing {
-   opacity: 1;
+.backdrop-showing, .overlap-showing {
+   opacity: 1
 }
-.backdrop-hiding,
-.overlap-hiding {
-   opacity: 0;
+.backdrop-hiding, .overlap-hiding {
+   opacity: 0
 }
 .overlap-showing {
-   left: 0;
+   left: 0
 }
-@media (max-width: 768px) {
-   [class^="overlap-wrap"] {
+@media (max-width:768px) {
+   [class^=overlap-wrap] {
       width: 100%;
       box-shadow: none;
       border-top-left-radius: 0;

@@ -16,7 +16,7 @@ class AdministrativeModel extends Authenticatable
     *
     * @var string
     */
-   protected $table = 'up_administrative';
+   protected $table = 'administrative';
 
    /**
     * The accessors to append to the model's array form.

@@ -18,7 +18,7 @@ class ProductFeatureModel extends BaseModel
     *
     * @var string
     */
-   protected $table = 'up_product_feature';
+   protected $table = 'product_feature';
 
    /**
     * The attributes that are mass assignable.

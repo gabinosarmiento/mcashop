@@ -13,7 +13,7 @@ class BrandModel extends BaseModel
     *
     * @var string
     */
-   protected $table = 'up_brand';
+   protected $table = 'brand';
 
    /**
     * The attributes that are mass assignable.

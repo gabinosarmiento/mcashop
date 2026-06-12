@@ -1,0 +1,93 @@
+/**
+ * wenk - Lightweight tooltip for the greater good
+ * @version v1.0.2
+ * (c) 2016 Tiaan du Plessis @mightyCrow |
+ * @link
+ * @license MIT
+ */
+
+[data-wenk] {
+    position: relative
+}
+[data-wenk]:after {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1;
+    padding: 8px 10px;
+    width: auto;
+    border-radius: 12px;
+    text-align: center;
+    position: absolute;
+    display: inline-block;
+    opacity: 0;
+    visibility: hidden;
+    transition: .2s;
+    bottom: 100%;
+    left: 50%;
+    z-index: 2;
+    color: #ffffff;
+    background-color: #6c757d;
+    white-space: nowrap;
+    pointer-events: none;
+    content: attr(data-wenk);
+    transform: translate(-50%, 8px)
+}
+[data-wenk]:hover {
+    overflow: visible
+}
+[data-wenk]:hover:after {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -4px)
+}
+[data-wenk].wenk--bottom:after, [data-wenk][data-wenk-position=bottom]:after {
+    bottom: auto;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -8px)
+}
+[data-wenk].wenk--bottom:hover:after, [data-wenk][data-wenk-position=bottom]:hover:after {
+    transform: translate(-50%, 4px)
+}
+[data-wenk].wenk--left:after, [data-wenk][data-wenk-position=left]:after {
+    bottom: auto;
+    left: auto;
+    top: 50%;
+    right: 100%;
+    transform: translate(8px, -50%)
+}
+[data-wenk].wenk--left:hover:after, [data-wenk][data-wenk-position=left]:hover:after {
+    transform: translate(-4px, -50%)
+}
+[data-wenk].wenk--right:after, [data-wenk][data-wenk-position=right]:after {
+    bottom: auto;
+    top: 50%;
+    left: 100%;
+    transform: translate(-8px, -50%)
+}
+[data-wenk].wenk--right:hover:after, [data-wenk][data-wenk-position=right]:hover:after {
+    transform: translate(4px, -50%)
+}
+[data-wenk].wenk-length--small:after, [data-wenk][data-wenk-length=small]:after {
+    white-space: normal;
+    width: 80px
+}
+[data-wenk].wenk-length--medium:after, [data-wenk][data-wenk-length=medium]:after {
+    white-space: normal;
+    width: 150px
+}
+[data-wenk].wenk-length--large:after, [data-wenk][data-wenk-length=large]:after {
+    white-space: normal;
+    width: 260px
+}
+[data-wenk].wenk-length--fit:after, [data-wenk][data-wenk-length=fit]:after {
+    white-space: normal;
+    width: 100%
+}
+[data-wenk].wenk-align--right:after, [data-wenk][data-wenk-align=right]:after {
+    text-align: right
+}
+[data-wenk].wenk-align--center:after, [data-wenk][data-wenk-align=center]:after {
+    text-align: center
+}

@@ -1,0 +1,270 @@
+/* -----------------------------------------------------------------------------
+   Variables
+   ----------------------------------------------------------------------------- */
+
+:root {
+    --mca-main-color: #054f9d;
+    --mca-hover-color: #066ac4;
+    --mca-inactive-color: #1969b1;
+    --box-border-color: #e9ecef;
+    --box-color-bg: #fcfcfd;
+    --box-color: #5a5a5a;
+}
+/* -----------------------------------------------------------------------------
+   Base
+   ----------------------------------------------------------------------------- */
+
+html, body {
+    height: 100%;
+}
+.text-mca {
+    color: var(--mca-hover-color);
+}
+.text-shipping {
+    margin-bottom: .375rem;
+}
+.required {
+    font-size: .875rem;
+    color: #dc3545;
+}
+.required::before {
+    content: "●";
+}
+/* -----------------------------------------------------------------------------
+   Scrollbar
+   ----------------------------------------------------------------------------- */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #066ac4;
+    height: 10px;
+}
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #066ac4 transparent;
+}
+/* -----------------------------------------------------------------------------
+   Layout
+   ----------------------------------------------------------------------------- */
+
+.dashboard {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+.col-sesion {
+    width: 350px;
+}
+/* -----------------------------------------------------------------------------
+   Backgrounds
+   ----------------------------------------------------------------------------- */
+
+.bg-image-administrative {
+    background: url('assets/administrative.jpg') center/cover no-repeat;
+}
+.bg-image-customer {
+    background: url('assets/customer.jpg') center/cover no-repeat;
+}
+.bg-image-reset {
+    background: url('assets/reset.jpg') center/cover no-repeat;
+}
+/* -----------------------------------------------------------------------------
+   Boxes
+   ----------------------------------------------------------------------------- */
+
+.box {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--box-border-color);
+    border-radius: 1.125rem;
+    margin-bottom: 1rem;
+}
+.box-header {
+    display: block;
+    padding: .625rem 1rem;
+    color: var(--box-color);
+    background-color: var(--box-color-bg);
+    border-bottom: 1px solid var(--box-border-color);
+}
+.box-body {
+    padding: 0;
+}
+.box-body-padding {
+    padding: 0 .75rem;
+}
+.box-footer {
+    padding: .75rem;
+}
+.box-title {
+    font-size: 18px;
+    font-weight: 500;
+}
+.box-scroll {
+    max-height: 34rem;
+    overflow: auto;
+}
+.box th, .box td {
+    border-color: var(--box-border-color);
+}
+/* -----------------------------------------------------------------------------
+   Box variants
+   ----------------------------------------------------------------------------- */
+
+.box-blue {
+    --box-color-bg-hover: #f7fbff;
+    --box-border-color: #e3efff;
+    --box-color-bg: #edf5ff;
+    --box-color: #055160;
+}
+.box-blue .table-hover>tbody>tr:hover>* {
+    --bs-table-bg-state: var(--box-color-bg-hover);
+}
+/* -----------------------------------------------------------------------------
+   Status
+   ----------------------------------------------------------------------------- */
+
+.table tr.Cancelado>* {
+    color: #f4320b !important;
+}
+.Borrador {
+    color: #f87c63 !important;
+}
+.Pausado {
+    color: #c82909 !important;
+}
+.Fallido {
+    color: #dc3545 !important;
+}
+.Cancelado {
+    color: #f4320b !important;
+}
+/* -----------------------------------------------------------------------------
+   Mascota
+   ----------------------------------------------------------------------------- */
+
+.pet-wrapper {
+    position: relative;
+    margin: 0 auto;
+}
+.pet-container {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px dashed var(--bs-primary-border-subtle);
+}
+/* -----------------------------------------------------------------------------
+   Buttons
+   ----------------------------------------------------------------------------- */
+
+.btn-mca {
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-bg: var(--mca-main-color);
+    --bs-btn-border-color: var(--mca-main-color);
+    --bs-btn-hover-bg: var(--mca-hover-color);
+    --bs-btn-hover-border-color: var(--mca-inactive-color);
+    --bs-btn-active-bg: var(--mca-inactive-color);
+    --bs-btn-active-border-color: var(--mca-inactive-color);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--mca-main-color);
+    --bs-btn-disabled-border-color: var(--mca-main-color);
+}
+.btn-outline-mca {
+    --bs-btn-color: var(--mca-main-color);
+    --bs-btn-border-color: var(--mca-main-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--mca-main-color);
+    --bs-btn-hover-border-color: var(--mca-main-color);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--mca-main-color);
+    --bs-btn-active-border-color: var(--mca-main-color);
+    --bs-btn-disabled-color: var(--mca-main-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--mca-main-color);
+    --bs-gradient: none;
+}
+.btn-subtle {
+    --bs-btn-color: var(--bs-primary-text-emphasis);
+    --bs-btn-bg: var(--bs-primary-bg-subtle);
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: var(--bs-primary-text-emphasis);
+    --bs-btn-hover-bg: var(--bs-primary-border-subtle);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-color: var(--bs-primary-text-emphasis);
+    --bs-btn-active-bg: var(--bs-primary-border-subtle);
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-disabled-color: var(--bs-secondary-color);
+    --bs-btn-disabled-bg: var(--bs-secondary-bg);
+    --bs-btn-disabled-border-color: transparent;
+    --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+    --bs-gradient: none;
+    gap: .375rem;
+}
+.btn-subtle-flat {
+    --bs-btn-color: var(--bs-primary-text-emphasis);
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: var(--bs-primary-text-emphasis);
+    --bs-btn-hover-bg: var(--bs-primary-bg-subtle);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-color: var(--bs-primary-text-emphasis);
+    --bs-btn-active-bg: var(--bs-primary-bg-subtle);
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-disabled-color: var(--bs-secondary-color);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: transparent;
+    --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+    --bs-gradient: none;
+    gap: .375rem;
+}
+.btn-subtle-flat:hover, .btn-subtle-flat:focus-visible {
+    box-shadow: 0 .125rem .25rem rgba(var(--bs-primary-rgb), .08), 0 .25rem .5rem rgba(var(--bs-primary-rgb), .05);
+}
+/* -----------------------------------------------------------------------------
+   Console
+   ----------------------------------------------------------------------------- */
+
+.console {
+    max-height: calc(34rem + 36px);
+    overflow: auto;
+    padding: .5rem .75rem;
+    font-family: monospace;
+    font-size: .75rem;
+    border: 1px dashed #adb5bd;
+    border-radius: 1.125rem;
+}
+.console a {
+    font-weight: 600;
+}
+.console .btn {
+    font-size: .875rem;
+    font-weight: 400;
+}
+/* -----------------------------------------------------------------------------
+   Bootstrap overrides
+   ----------------------------------------------------------------------------- */
+
+.nav-pills {
+    --bs-nav-pills-border-radius: var(--bs-border-radius-xl);
+    --bs-nav-pills-link-active-color: #343a40;
+    --bs-nav-pills-link-active-bg: #f4f4f4;
+}
+.nav-pills .nav-link {
+    color: var(--bs-secondary);
+    /*border: 1px solid #dee2e6;
+    border-radius: .375rem;*/
+}
+.nav-mca .nav-link {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}

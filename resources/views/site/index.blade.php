@@ -174,13 +174,13 @@
                         <div class="img-container">
                             <img src="images/tecnologia.webp" class="img-cover img-loading" alt="gama de productos" width="340" height="226" loading="lazy"/>
                         </div>
-                        <span class="badge badge-absolute bg-warning text-dark">
+                        <span class="badge-card badge bg-warning">
                             <i class="fal fa-badge-check"></i>
                             Gama alta de productos
                         </span>
                     </div>
-                    <div class="card-body bg-secondary text-white">
-                        <p class="card-text fw-light">
+                    <div class="card-body text-white bg-secondary">
+                        <p class="fw-light">
                             Ofrecemos productos recientes y avanzados en tecnología de cómputo, como laptops con los últimos procesadores, tarjetas gráficas de alto rendimiento y periféricos innovadores.
                         </p>
                     </div>
@@ -192,13 +192,13 @@
                         <div class="img-container">
                             <img src="images/servicios.webp" class="img-cover img-loading" alt="soluciones de cómputo" width="340" height="226" loading="lazy"/>
                         </div>
-                        <span class="badge badge-absolute bg-warning text-dark">
+                        <span class="badge-card badge bg-warning">
                             <i class="fal fa-badge-check"></i>
                             Soluciones personalizadas de cómputo
                         </span>
                     </div>
-                    <div class="card-body bg-secondary text-white">
-                        <p class="card-text fw-light">
+                    <div class="card-body text-white bg-secondary">
+                        <p class="fw-light">
                             Nuestros servicios permiten a los clientes personalizar y configurar sus equipos según sus necesidades, desde la construcción de PCs hasta la instalación de software y hardware.
                         </p>
                     </div>
@@ -210,13 +210,13 @@
                         <div class="img-container">
                             <img src="images/cotizaciones.webp" class="img-cover img-loading" alt="cotizaciones a medida" width="340" height="226" loading="lazy"/>
                         </div>
-                        <span class="badge badge-absolute bg-warning text-dark">
+                        <span class="badge-card badge bg-warning">
                             <i class="fal fa-badge-check"></i>
                             Cotizaciones a tu medida
                         </span>
                     </div>
-                    <div class="card-body bg-secondary text-white">
-                        <p class="card-text fw-light">
+                    <div class="card-body text-white bg-secondary">
+                        <p class="fw-light">
                             Descubre lo fácil que es crear tus propias cotizaciones. Ajusta cada detalle y cada producto según tus necesidades específicas, para obtener beneficios y precios adaptados al instante.
                         </p>
                     </div>

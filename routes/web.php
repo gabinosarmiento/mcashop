@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Site;
 use App\Http\Controllers\Store;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\Cart;
 use App\Http\Controllers\Customer\Account;
 use App\Http\Controllers\Customer\Session;
 use App\Http\Controllers\Customer\Reset;
@@ -36,20 +36,20 @@ Route::get('sitemap', [Store::class, 'sitemap'])->name('sitemap');
 # Web routes CART
 # --------------------------------------------------------------------------
 Route::prefix('carrito')->group(function () {
-   Route::get('/', [CartController::class, 'index'])->name('carrito');
-   Route::get('/agregar/{id}', [CartController::class, 'add'])->name('carrito/agregar');
-   Route::get('/menos/{id}', [CartController::class, 'minus'])->name('carrito/menos');
-   Route::get('/mas/{id}', [CartController::class, 'plus'])->name('carrito/mas');
-   Route::get('/error', [CartController::class, 'error'])->name('carrito/error');
-   Route::get('/exito', [CartController::class, 'success'])->name('carrito/exito');
+   Route::get('/', [Cart::class, 'index'])->name('carrito');
+   Route::get('/agregar/{id}', [Cart::class, 'add'])->name('carrito/agregar');
+   Route::get('/remover/{id}', [Cart::class, 'remove'])->name('carrito/remover');
+   Route::get('/actualizar/{id}', [Cart::class, 'update'])->name('carrito/actualizar');
+   Route::get('/error', [Cart::class, 'error'])->name('carrito/error');
+   Route::get('/exito', [Cart::class, 'success'])->name('carrito/exito');
 
-   Route::middleware('cart_check')->group(function () {
-      Route::get('/cotizar', [CartController::class, 'quote'])->name('carrito/cotizar');
-      Route::get('/continuar', [CartController::class, 'checkout'])->name('carrito/continuar');
-      Route::get('/facturar', [CartController::class, 'invoice'])->name('carrito/facturar');
-      Route::get('/depositar', [CartController::class, 'wiretransfer'])->name('carrito/depositar');
-      Route::get('/mercadopago', [CartController::class, 'mercadopago'])->name('carrito/mercadopago');
-      Route::post('/mercadopago/pagar', [CartController::class, 'mercadopago_payment'])->name('carrito/mercadopago/pagar');
+   Route::middleware('has_cart')->group(function () {
+      Route::get('/cotizar', [Cart::class, 'quote'])->name('carrito/cotizar');
+      Route::get('/continuar', [Cart::class, 'checkout'])->name('carrito/continuar');
+      Route::get('/facturar', [Cart::class, 'invoice'])->name('carrito/facturar');
+      Route::get('/depositar', [Cart::class, 'wiretransfer'])->name('carrito/depositar');
+      Route::get('/mercadopago', [Cart::class, 'mercadopago'])->name('carrito/mercadopago');
+      Route::post('/mercadopago/pagar', [Cart::class, 'mercadopago_payment'])->name('carrito/mercadopago/pagar');
    });
 });
 

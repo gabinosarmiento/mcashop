@@ -19,90 +19,71 @@ use Illuminate\Support\Facades\Hash;
 
 class Account extends Controller
 {
-    # reload
-    public function reload()
-    {
-        return view('customer.record');
-    }
-
-    public function create(CreateRequest $request)
-    {
-        $data = $request->only('firstname', 'lastname', 'phone', 'email', 'password', 'terms');
-
-        $data['password'] = Hash::make($data['password']);
-
-        $user = CustomerModel::create($data);
-
-        Auth::guard('customer')->login($user);
-
-        return response(['redirect' => route('cliente/cuenta')], 201);
-    }
-
+    # account
     public function account()
     {
-        $data = CustomerModel::find(Auth::guard('customer')->id())->makeVisible('password')->toArray();
+        $data = CustomerModel::find(auth('customer')->id())->makeVisible('password')->toArray();
 
         return view('customer.account.index', compact('data'));
     }
 
-    public function account_record()
-    {
-        $data = CustomerModel::find(Auth::guard('customer')->id())->toArray();
-
-        return view('customer.account.record', compact('data'));
-    }
-
+    # account_edit
     public function account_edit()
     {
-        $data = CustomerModel::find(Auth::guard('customer')->id())->toArray();
+        $data = CustomerModel::find(auth('customer')->id())->toArray();
 
-        return view('customer.account.edit', compact('data'));
+        $view = view('customer.account.edit', compact('data'));
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
     }
 
-    public function account_update(EditRequest $request)
-    {
-        $data = $request->only('firstname', 'lastname', 'phone');
-
-        CustomerModel::find(Auth::guard('customer')->id())->update($data);
-
-        return $this->account_record();
-    }
-
+    # address
     public function address()
     {
-        $data = CustomerAddressModel::where('customer_id', Auth::guard('customer')->id())->firstOrEmpty()->toArray();
+        $data = CustomerAddressModel::where('customer_id', auth('customer')->id())->firstOrEmpty()->toArray();
 
         return view('customer.address.index', compact('data'));
     }
 
+    # address_record
     public function address_record()
     {
-        $data = CustomerAddressModel::where('customer_id', Auth::guard('customer')->id())->firstOrEmpty()->toArray();
+        $data = CustomerAddressModel::where('customer_id', auth('customer')->id())->firstOrEmpty()->toArray();
 
-        return view('customer.address.record', compact('data'));
+        $view = view('customer.address.record', compact('data'));
+
+        return response(['render' => ['record-html' => $view->render()]]);
     }
 
+    # address_add
     public function address_add()
     {
-        return view('customer.address.add');
+        $view = view('customer.address.add');
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
     }
 
+     # address_add
     public function address_save(AddressRequest $request)
     {
         $data = $request->only('customer_id', 'name', 'phone', 'email', 'street', 'streets', 'reference', 'colony', 'city', 'state', 'country', 'zc');
 
-        CustomerAddressModel::create($data);
+        $user = CustomerAddressModel::create($data);
 
         return $this->address_record();
     }
 
+    # address_edit
     public function address_edit($id)
     {
         $data = CustomerAddressModel::find($id)->toArray();
 
-        return view('customer.address.edit', compact('data'));
+        $view = view('customer.address.edit', compact('data'));
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
     }
 
+    # address_update
     public function address_update(AddressRequest $request)
     {
         $data = $request->only('customer_id', 'name', 'phone', 'email', 'street', 'streets', 'reference', 'colony', 'city', 'state', 'country', 'zc');
@@ -112,20 +93,80 @@ class Account extends Controller
         return $this->address_record();
     }
 
+
     public function address_location(Request $request)
     {
-        $request->validate(['zc' => 'required|digits:5|exists:up_colony,zc'], [], ['zc' => 'código postal']);
+        $request->validate(['zc' => 'required|digits:5|exists:colony,zc'], [], ['zc' => 'código postal']);
 
         $colonies = ColonyModel::where('zc', $request->zc)->get();
 
         $colony = $colonies->first();
 
-        $data['zc'] = $colony->zc;
-        $data['city'] = $colony->city->name;
+        $data['zc']    = $colony->zc;
+        $data['city']  = $colony->city->name;
         $data['state'] = $colony->city->state->name;
+
         $data['colonies'] = $colonies->pluck('name', 'id')->toArray();
 
-        return view('partials.location', compact('data'));
+        $view = view('partials.location', compact('data'));
+
+        return response(['render' => ['location-html' => $view->render()]]);
+    }
+
+    # billing
+    public function billing()
+    {
+        $data = CustomerBillingModel::where('customer_id', Auth::guard('customer')->id())->firstOrEmpty()->toArray();
+
+        return view('customer.billing.index', compact('data'));
+    }
+
+    # billing_record
+    public function billing_record()
+    {
+        $data = CustomerBillingModel::where('customer_id', Auth::guard('customer')->id())->firstOrEmpty()->toArray();
+
+        $view = view('customer.billing.record', compact('data'));
+
+        return response(['render' => ['record-html' => $view->render()]]);
+    }
+
+    # billing_add
+    public function billing_add()
+    {
+        $view = view('customer.billing.add');
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
+    }
+
+    # billing_add
+    public function billing_save(BillingRequest $request)
+    {
+        $data = $request->only('customer_id', 'name', 'rfc', 'regime', 'phone', 'email', 'zc');
+
+        $user = CustomerBillingModel::create($data);
+
+        return $this->billing_record();
+    }
+
+    # billing_edit
+    public function billing_edit($id)
+    {
+        $data = CustomerBillingModel::find($id)->toArray();
+
+        $view = view('customer.billing.edit', compact('data'));
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
+    }
+
+    # billing_update
+    public function billing_update(BillingRequest $request)
+    {
+        $data = $request->only('customer_id', 'name', 'rfc', 'regime', 'phone', 'email', 'zc');
+
+        CustomerBillingModel::find($request->id)->update($data);
+
+        return $this->billing_record();
     }
 
     public function quote()
@@ -135,11 +176,14 @@ class Account extends Controller
         return view('customer.quote.index', compact('data'));
     }
 
+    # account_edit
     public function quote_see($id)
     {
         $data = QuoteModel::with('products')->find($id)->toArray();
 
-        return view('customer.quote.see', compact('data'));
+        $view = view('customer.quote.see', compact('data'));
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
     }
 
     public function shipping()
@@ -153,50 +197,8 @@ class Account extends Controller
     {
         $data = ShippingModel::with('products')->find($id)->toArray();
 
-        return view('customer.shipping.see', compact('data'));
-    }
+        $view = view('customer.shipping.see', compact('data'));
 
-    public function billing()
-    {
-        $data = CustomerBillingModel::where('customer_id', Auth::guard('customer')->id())->firstOrEmpty()->toArray();
-
-        return view('customer.billing.index', compact('data'));
-    }
-
-    public function billing_record()
-    {
-        $data = CustomerBillingModel::where('customer_id', Auth::guard('customer')->id())->firstOrEmpty()->toArray();
-
-        return view('customer.billing.record', compact('data'));
-    }
-
-    public function billing_add()
-    {
-        return view('customer.billing.add');
-    }
-
-    public function billing_save(BillingRequest $request)
-    {
-        $data = $request->only('customer_id', 'name', 'rfc', 'regime', 'phone', 'email', 'zc');
-
-        CustomerBillingModel::create($data);
-
-        return $this->billing_record();
-    }
-
-    public function billing_edit($id)
-    {
-        $data = CustomerBillingModel::find($id)->toArray();
-
-        return view('customer.billing.edit', compact('data'));
-    }
-
-    public function billing_update(BillingRequest $request)
-    {
-        $data = $request->only('customer_id', 'name', 'rfc', 'regime', 'phone', 'email', 'zc');
-
-        CustomerBillingModel::find($request->id)->update($data);
-
-        return $this->billing_record();
+        return response(['render' => ['overlap-one' => $view->render()]]);
     }
 }

@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
                     <i class="fal fa-tag"></i>
                     Categorías
                 </button>

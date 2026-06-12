@@ -16,7 +16,7 @@ class CustomerModel extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'up_customer';
+    protected $table = 'customer';
 
     /**
      * The accessors to append to the model's array form.

@@ -1,5 +1,5 @@
 <div id="overlap-sidebar" class="overlap">
-    <div class="overlap-wrap overlap-wrap-sm">
+    <div class="overlap-wrap-sm">
         <div class="overlap-header">
             <div class="overlap-close"></div>
             Menú

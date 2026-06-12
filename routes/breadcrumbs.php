@@ -63,12 +63,10 @@ Breadcrumbs::for ('marca', function (BreadcrumbTrail $trail, $brand) {
    $trail->push($brand['name']);
 });
 
-Breadcrumbs::for ('categoria', function (BreadcrumbTrail $trail, $data) {
+Breadcrumbs::for ('categoria', function (BreadcrumbTrail $trail, $category) {
    $trail->parent('inicio');
 
-   foreach ($data as $crumb) {
-      $trail->push($crumb['name']);
-   }
+   $trail->push($category['name']);
 });
 
 Breadcrumbs::for ('cliente', function (BreadcrumbTrail $trail, $route) {
