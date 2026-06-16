@@ -22,9 +22,9 @@
         Datos de envío
         <div class="section-message">
             Hemos precargado los datos de tu última compra para agilizar el proceso.
-            <small class="text-danger d-block">
+            <span class="d-block text-primary">
                 Revisa la información antes de continuar.
-            </small>
+            </span>
         </div>
     </h2>
     <div class="row">
@@ -56,14 +56,14 @@
                                             </div>
                                         </a>
                                     </td>
-                                    <td width="100">
+                                    <td width="100" class="text-center">
                                         {{ $item['quantity'] }}
                                     </td>
-                                    <th width="120" class="text-end">
+                                    <th width="150" class="text-end">
                                         <small>
                                             $
                                         </small>
-                                        {{ number_format($item['total'], 2) }}
+                                        {{ number_format($item['price'], 2) }}
                                     </th>
                                 </tr>
                                 @endforeach
@@ -85,7 +85,7 @@
                                 <th width="100">
                                     Nombre
                                 </th>
-                                <td>
+                                <td colspan="2">
                                     {{ $data['address']['name'] }}
                                 </td>
                             </tr>
@@ -93,7 +93,7 @@
                                 <th>
                                     Correo
                                 </th>
-                                <td>
+                                <td colspan="2">
                                     {{ $data['address']['email'] }}
                                 </td>
                             </tr>
@@ -101,49 +101,64 @@
                                 <th>
                                     Teléfono
                                 </th>
-                                <td>
+                                <td colspan="2">
                                     {{ $data['address']['phone'] }}
                                 </td>
                             </tr>
                             <tr>
-                                <th>
+                                <th rowspan="3">
                                     Dirección
                                 </th>
                                 <td>
                                     <div>
                                         {{ $data['address']['street'] }}
                                         <small class="text-secondary">
-                                            [ calle ]
+                                            calle
                                         </small>
                                     </div>
+                                </td>
+                                <td>
                                     <div>
                                         {{ $data['address']['colony'] }}
                                         <small class="text-secondary">
-                                            [ colonia ]
+                                            colonia
                                         </small>
                                     </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <div>
                                         {{ $data['address']['city'] }}
                                         <small class="text-secondary">
-                                            [ ciudad ]
+                                            ciudad
                                         </small>
                                     </div>
+                                </td>
+                                <td>
                                     <div>
                                         {{ $data['address']['state'] }}
                                         <small class="text-secondary">
-                                            [ estado ]
+                                            estado
                                         </small>
                                     </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <div>
                                         {{ $data['address']['country'] }}
                                         <small class="text-secondary">
-                                            [ país ]
+                                            país
                                         </small>
                                     </div>
+                                </td>
+                                <td>
                                     <div>
                                         {{ $data['address']['zc'] }}
                                         <small class="text-secondary">
-                                            [ cp ]
+                                            cp
                                         </small>
                                     </div>
                                 </td>
@@ -182,16 +197,7 @@
                     </li>
                     <li>
                         <i class="fal fa-message-middle text-mca"></i>
-                        Si tienes alguna duda o pregunta, puedes contactarnos o revisar nuestras políticas de
-                        <a href="{{ route('envios') }}" target="_blank">
-                            envíos
-                        </a>
-                        y
-                        <a href="{{ route('devoluciones') }}" target="_blank">
-                            devoluciones
-                        </a>
-                        en mcashop.mx
-                    </li>
+                        Si tienes alguna duda o pregunta, puedes contactarnos o revisar nuestras políticas de <a href="{{ route('envios') }}" target="_blank">envíos</a> y <a href="{{ route('devoluciones') }}" target="_blank">devoluciones</a> en mcashop.mx</li>
                     <li>
                         <i class="fal fa-envelope text-mca"></i>
                         Al finalizar tu pedido y confirmar el pago, recibirás un correo electrónico con la confirmación de tu compra.
@@ -289,58 +295,77 @@
                     @endif
                     @if($data['shipping'] > 0.0)
                     <a class="btn btn-light w-100 mb-2" href="{{ route('carrito/cotizar') }}">
-                        Realizar cotización
+                        Hacer cotización
                     </a>
-                    <button id="click-cart-mercadopago" class="btn btn-mca w-100" data-action="{{ route('carrito/mercadopago') }}" data-overlapshow="#overlap-one">
-                        Realizar pedido y pagar ahora
+                    <button id="action-cart-mercadopago" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" data-action="{{ route('carrito/mercadopago') }}" data-overlap-show="#overlap-one">
+                        <i class="fa-regular fa-credit-card"></i>
+                        Pagar con Mercado Pago
                     </button>
                     <div id="wallet_container"></div>
                     @endif
                 </div>
             </div>
-            <div class="console">
-                <div class="mb-2">
-                    <strong class="text-danger-emphasis">
-                        Ahorra {{ DISCOUNT }}% pagando con BBVA
-                    </strong>
-                </div>
-                <ul class="list-unstyled mb-2">
-                    <li>
+            <div class="card card-blue card-hover">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <div class="h5 text-primary-emphasis fw-bold">
+                                Ahorra {{ DISCOUNT }}% pagando con BBVA
+                            </div>
+                            <div class="text-muted small">
+                                Transferencia o depósito bancario
+                            </div>
+                        </div>
+                        <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">
+                            -{{ DISCOUNT }}%
+                        </span>
+                    </div>
+                    <div class="small mb-3">
                         <strong>
                             Mayoristas en Cómputo de Antequera, S.A. de C.V.
                         </strong>
-                    </li>
-                    <li>
+                        <br/>
                         Cuenta
                         <strong>
                             0179712348
                         </strong>
-                    </li>
-                    <li>
+                        <br/>
                         CLABE
                         <strong>
                             012610001797123486
                         </strong>
-                    </li>
-                </ul>
-                <p>
-                    Si eliges pagar mediante transferencia bancaria o depósito en efectivo, dispondrás de 24 horas para realizar el pago y enviar tu comprobante a <a href="mailto:ventas@mcashop.mx">ventas@mcashop.mx</a>.
-                </p>
-                <div class="text-end">
-                    Ahorras
-                    <strong class="fs-6">
-                        ${{ number_format(discount_calculate($data['total'], DISCOUNT), 2) }}
-                    </strong>
+                    </div>
+                    <small class="text-muted mb-4">
+                        Tendrás 24 horas para realizar el pago y enviar tu comprobante a <a href="mailto:ventas@mcashop.mx" class="fw-semibold text-decoration-none">ventas@mcashop.mx</a>.
+                    </small>
                 </div>
-                <div class="text-end mb-3">
-                    Total a pagar
-                    <strong class="fs-6">
-                        ${{ number_format(discount_breakdown($data['total'], DISCOUNT), 2) }}
-                    </strong>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between small text-muted mb-2">
+                        <span>
+                            Ahorras
+                        </span>
+                        <strong>
+                            <small>
+                                $
+                            </small>
+                            {{ number_format(discount_calculate($data['total'], DISCOUNT), 2) }}
+                        </strong>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fw-semibold">
+                            Total a pagar
+                        </span>
+                        <strong class="coupon-total">
+                            <small>
+                                $
+                            </small>
+                            {{ number_format(discount_breakdown($data['total'], DISCOUNT), 2) }}
+                        </strong>
+                    </div>
+                    <a href="{{ route('carrito/depositar') }}" class="btn btn-subtle w-100 fw-semibold">
+                        Continuar con transferencia
+                    </a>
                 </div>
-                <a href="{{ route('carrito/depositar') }}" class="btn btn-subtle w-100">
-                    Continuar con transferencia
-                </a>
             </div>
         </div>
     </div>
@@ -367,3 +392,4 @@
 @endguest
 </div>
 @endsection
+

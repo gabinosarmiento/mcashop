@@ -18,7 +18,7 @@ class QuoteProductModel extends BaseModel
     *
     * @var string
     */
-   protected $table = 'up_quote_product';
+   protected $table = 'quote_product';
 
    /**
     * The attributes that are mass assignable.

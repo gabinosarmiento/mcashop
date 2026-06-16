@@ -40,8 +40,8 @@ Route::prefix('carrito')->group(function () {
    Route::get('/agregar/{id}', [Cart::class, 'add'])->name('carrito/agregar');
    Route::get('/remover/{id}', [Cart::class, 'remove'])->name('carrito/remover');
    Route::get('/actualizar/{id}', [Cart::class, 'update'])->name('carrito/actualizar');
-   Route::get('/error', [Cart::class, 'error'])->name('carrito/error');
-   Route::get('/exito', [Cart::class, 'success'])->name('carrito/exito');
+
+   Route::get('/exito', [Cart::class, 'success'])->middleware('has_success')->name('carrito/exito');
 
    Route::middleware('has_cart')->group(function () {
       Route::get('/cotizar', [Cart::class, 'quote'])->name('carrito/cotizar');
@@ -89,6 +89,7 @@ Route::middleware('authenticate_customer')->prefix('cliente')->name('cliente/')-
 
    Route::get('pedido', [Account::class, 'shipping'])->name('pedido');
    Route::get('pedido/ver/{id}', [Account::class, 'shipping_see'])->name('pedido/ver');
+   Route::get('pedido/ticket/{id}', [Account::class, 'shipping_ticket'])->name('pedido/ticket');
 
    Route::get('facturacion', [Account::class, 'billing'])->name('facturacion');
    Route::get('facturacion/agregar', [Account::class, 'billing_add'])->name('facturacion/agregar');

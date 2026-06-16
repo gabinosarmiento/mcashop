@@ -18,7 +18,7 @@ class ShippingModel extends BaseModel
      *
      * @var array
      */
-    protected $fillable = ['customer_id', 'folio', 'name', 'email', 'phone', 'street', 'streets', 'reference', 'colony', 'city', 'state', 'country', 'zc', 'subtotal', 'amount', 'vat', 'total', 'freight', 'carrier', 'tracking_link', 'tracking_track', 'payment', 'payment_id', 'payment_method', 'payment_type', 'payment_order', 'payment_status', 'comment', 'invoice', 'status'];
+    protected $fillable = ['customer_id', 'folio', 'name', 'email', 'phone', 'street', 'streets', 'reference', 'colony', 'city', 'state', 'country', 'zc', 'shipment', 'shipping', 'subtotal', 'amount', 'discount', 'saving', 'vat', 'total', 'payment', 'payment_id', 'payment_method', 'payment_type', 'payment_order', 'payment_status', 'payment_detail', 'freight', 'tracking', 'tracking_link', 'tracking_track', 'comment', 'invoice', 'status'];
 
     /**
      * Get the customer associated to this shipment.

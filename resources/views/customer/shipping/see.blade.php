@@ -136,7 +136,7 @@
                             Método
                         </th>
                         <td>
-                            {{ $data['payment_method'] ?? '...' }}
+                            {{ MERCADOPAGO_METHOD[$data['payment_method']] ?? '...' }}
                         </td>
                     </tr>
                     <tr>
@@ -144,7 +144,7 @@
                             Estado
                         </th>
                         <td>
-                            {{ $data['payment_status'] ?? '...' }}
+                            {{ MERCADOPAGO_STATUS[$data['payment_status']] ?? '...' }}
                         </td>
                     </tr>
                     <tr>
@@ -264,6 +264,17 @@
                                     </tr>
                                     <tr>
                                         <th colspan="2" class="text-end">
+                                            Descuento
+                                        </th>
+                                        <th class="text-end">
+                                            <small>
+                                                -$
+                                            </small>
+                                            {{ number_format($data['discount'], 2) }}
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-end">
                                             IVA
                                         </th>
                                         <th class="text-end">
@@ -289,6 +300,14 @@
                         </div>
                     </div>
                 </div>
+                @if($data['payment'] === 'Transferencia')
+                <div class="text-end">
+                    <a class="btn btn-subtle-flat" href="{{ route('cliente/pedido/ticket', $data['id']) }}" target="_blank">
+                        <i class="fa-light fa-ticket-perforated"></i>
+                        Descargar ficha de pago
+                    </a>
+                </div>
+                @endif
             </div>
         </div>
     </div>

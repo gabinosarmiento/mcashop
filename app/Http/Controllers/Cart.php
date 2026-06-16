@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\CarrierRateModel;
 use App\Models\CarrierZoneModel;
 use App\Models\ColonyModel;
-use App\Models\CustomerAddressModel;
 use App\Models\CustomerModel;
+use App\Models\ErrorModel;
 use App\Models\ProductInventoryModel;
-use App\Models\InventoryIndexModel;
 use App\Models\QuoteModel;
 use App\Models\QuoteProductModel;
 use App\Models\ShippingModel;
@@ -19,20 +18,24 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use MercadoPago;
-use PayPal;
+use MercadoPago\Client\Payment\PaymentClient;
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\Exceptions\MPApiException;
+use MercadoPago\MercadoPagoConfig;
+use Throwable;
+use Exception;
 
 class Cart extends Controller
 {
     public function invoice(Request $request)
     {
-        session()->forget('_invoice');
+        Session::forget('_invoice');
 
         if ($request->boolean('change-invoice')) {
-            session(['_invoice' => true]);
+            Session::put('_invoice', true);
         }
 
-        return response(['checked' => session()->has('_invoice')]);
+        return response(['checked' => Session::has('_invoice')]);
     }
 
     public function index()
@@ -252,11 +255,7 @@ class Cart extends Controller
 
                     // Group products that share the same carrier zone to price shipping once per group
                     if (!isset($groups[$zone])) {
-                        $groups[$zone] = [
-                            'zone'     => $zone,
-                            'weight'   => 0.0,
-                            'products' => [],
-                        ];
+                        $groups[$zone] = ['zone' => $zone, 'weight' => 0.0, 'products' => []];
                     }
 
                     // Accumulate group total weight and store product rows for proportional split
@@ -355,10 +354,271 @@ class Cart extends Controller
         return view('cart.checkout', compact('data'));
     }
 
-    public function quote()
+    public function mercadopago()
+    {
+        $items = [];
+
+        $checkout = Session::get('_checkout');
+
+        $payer['name']  = $checkout['address']['name'];
+        $payer['email'] = $checkout['address']['email'];
+
+        foreach ($checkout['products'] as $item) {
+            $items[] = [
+                'id'          => $item['sku'],
+                'title'       => $item['name'],
+                'quantity'    => intval($item['quantity']),
+                'unit_price'  => floatval($item['price']),
+                'currency_id' => 'MXN',
+            ];
+        }
+
+        $items[] = [
+            'id'          => 'shipping',
+            'title'       => 'Costo de envío',
+            'quantity'    => 1,
+            'unit_price'  => floatval($checkout['shipping']),
+            'currency_id' => 'MXN',
+        ];
+
+        MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_TOKEN'));
+
+        $client = new PreferenceClient();
+
+        $preference = $client->create([
+            'items'              => $items,
+            'payer'              => $payer,
+            'expires'            => true,
+            'expiration_date_to' => date('c', strtotime('+24 hours')),
+        ]);
+
+        $view = view('cart.mercadopago', compact('checkout', 'preference'));
+
+        return response(['render' => ['overlap-one' => $view->render()]]);
+    }
+
+    public function mercadopago_payment(Request $request)
+    {
+        $invoice = Session::get('_invoice');
+        $success = Session::get('_checkout');
+
+        $success['invoice'] = $invoice;
+        $success['payment'] = 'Mercado Pago';
+        $success['status']  = 'Proceso';
+
+        MercadoPagoConfig::setAccessToken(env('MERCADOPAGO_TOKEN'));
+
+        try {
+            $client = new PaymentClient();
+
+            $data = [
+                'transaction_amount' => (float) $success['total'],
+                'payment_method_id'  => $request->payment_method_id,
+                'payer'              => ['email' => $request->input('payer.email')],
+            ];
+
+            if ($request->filled('token')) {
+                $data['installments'] = (int) $request->installments;
+                $data['issuer_id']    = $request->issuer_id;
+                $data['token']        = $request->token;
+            }
+
+            if ($request->filled('metadata')) {
+                $data['metadata'] = $request->metadata;
+            }
+
+            $payment = $client->create($data);
+
+            $status      = $payment->status;
+            $transaction = $payment->transaction_details;
+
+            $success['payment_id']     = $payment->id;
+            $success['payment_status'] = $payment->status;
+            $success['payment_detail'] = $payment->status_detail;
+            $success['payment_type']   = $payment->payment_type_id;
+            $success['payment_method'] = $payment->payment_method_id;
+
+            if ($success['payment_type'] === 'ticket') {
+                $success['payment_url']  = $transaction->external_resource_url;
+                $success['payment_code'] = $transaction->verification_code;
+            }
+
+            if (isset(MERCADOPAGO_STATUS[$success['payment_status']])) {
+                $status = MERCADOPAGO_STATUS[$success['payment_status']];
+            }
+
+            if (isset(MERCADOPAGO_DETAIL[$success['payment_detail']])) {
+                $detail = MERCADOPAGO_DETAIL[$success['payment_detail']];
+            }
+
+            if (isset($payment->order->id)) {
+                $success['payment_order'] = $payment->order->id;
+            }
+
+            if (in_array($payment->status, ['approved', 'authorized', 'pending', 'in_process'], true) === false) {
+                throw new Exception($detail ?? $status);
+            }
+        } catch (MPApiException $e) {
+            $response = $e->getApiResponse();
+            $message  = $e->getMessage();
+
+            $content = $response->getContent();
+            $code    = $response->getStatusCode();
+
+            if (isset($content['message'])) {
+                $message = $content['message'];
+            }
+
+            if (!empty($content['cause'])) {
+                $causes = array_column($content['cause'], 'description');
+
+                if (!empty($causes)) {
+                    $message = implode(', ', $causes);
+                }
+            }
+
+            if (isset(MERCADOPAGO_DETAIL[$message])) {
+                $message = MERCADOPAGO_DETAIL[$message];
+            }
+
+            return response(['message' => $message], $code);
+
+        } catch (Throwable $e) {
+            return response(['message' => $e->getMessage()], 400);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $success['folio'] = str_folio(ShippingModel::count(), 'P');
+
+            $create = array_unwrap($success, ['address']);
+
+            $shipping = ShippingModel::create($create);
+
+            foreach ($success['products'] as $item) {
+                ShippingProductModel::create(array_merge($item, ['shipping_id' => $shipping->id]));
+            }
+
+            DB::commit();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            ErrorModel::create(['tag' => 'mercadopago', 'reference' => $success['payment_id'], 'exception' => $e->getMessage()]);
+
+            return response(['message' => 'Tu pago fue recibido correctamente, pero ocurrió un problema al registrar tu pedido. Nuestro equipo revisará la operación. Por favor no intentes realizar el pago nuevamente.'], 500);
+        }
+
+        // try {
+        //     Mail::send('layouts.messages.success', compact('checkout'), function ($message) use ($success) {
+        //         $message->to($success['address']['email'])->cc(env('MAIL_USERNAME'))->subject("Pedido de MCAShop Generado - Folio: {$success['folio']}");
+        //     });
+        // } catch (Throwable $e) {
+        //     ErrorModel::create(['tag' => 'mail', 'reference' => $success['folio'], 'exception' => $e->getMessage()]);
+        // }
+
+        Session::regenerateCart();
+
+        Session::forget('_invoice');
+
+        Session::flash('_success', $success);
+
+        return response(['message' => "{$status} Redireccionando..."]);
+    }
+
+    public function success()
+    {
+        return view('cart.success');
+    }
+
+    public function wiretransfer()
     {
         $invoice = Session::get('_invoice');
 
+        $checkout = Session::get('_checkout');
+
+        DB::beginTransaction();
+
+        try {
+            $folio = str_folio(ShippingModel::count(), 'P');
+
+            $checkout['folio']          = $folio;
+            $checkout['invoice']        = $invoice;
+            $checkout['payment']        = 'Transferencia';
+            $checkout['payment_method'] = 'bank_transfer';
+            $checkout['payment_status'] = 'in_process';
+            $checkout['payment_type']   = 'bancomer';
+            $checkout['status']         = 'Proceso';
+            $checkout['comment']        = 'El pedido se pagará por medio de transferencia bancaria directa, sin intermediarios';
+
+            $discount = 0.0;
+
+            $products = count($checkout['products']);
+
+            $checkout['discount'] = round($checkout['amount'] * (DISCOUNT / 100), 2);
+
+            $checkout = array_merge($checkout, array_fill_keys(['amount', 'vat', 'total'], 0.0));
+
+            foreach ($checkout['products'] as $index => &$item) {
+                $item['discount'] = round($item['base'] * (DISCOUNT / 100), 2);
+
+                if ($index === $products - 1) {
+                    $item['discount'] = round($checkout['discount'] - $discount, 2);
+                }
+
+                $discount += $item['discount'];
+
+                $item['amount'] = round($item['base'] - $item['discount'], 2);
+                $item['vat']    = round(iva_calculate($item['amount']), 2);
+                $item['total']  = round($item['amount'] + $item['vat'], 2);
+
+                $checkout['amount'] += $item['amount'];
+                $checkout['vat'] += $item['vat'];
+                $checkout['total'] += $item['total'];
+            }
+
+            unset($item);
+
+            $checkout['amount'] = round($checkout['amount'], 2);
+            $checkout['vat']    = round($checkout['vat'], 2);
+            $checkout['total']  = round($checkout['total'], 2);
+
+            $create = array_unwrap($checkout, ['address']);
+
+            $shipping = ShippingModel::create($create);
+
+            foreach ($checkout['products'] as $item) {
+                ShippingProductModel::create(array_merge($item, ['shipping_id' => $shipping->id]));
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            ErrorModel::create(['tag' => 'wiretransfer', 'reference' => $checkout['folio'], 'exception' => $e->getMessage()]);
+
+            return response(['message' => 'Ocurrió un problema al registrar tu pedido. Por favor intenta nuevamente.'], 500);
+        }
+
+        // try {
+        //     Mail::send('layouts.messages.success', compact('checkout'), function ($message) use ($checkout) {
+        //         $message->to($checkout['address']['email'])->cc(env('MAIL_USERNAME'))->subject("Pedido de MCAShop Generado - Folio: {$checkout['folio']}");
+        //     });
+        // } catch (Throwable $e) {
+        //     ErrorModel::create(['tag' => 'mail', 'reference' => $checkout['folio'], 'exception' => $e->getMessage()]);
+        // }
+
+        Session::regenerateCart();
+
+        Session::forget('_invoice');
+
+        return view('cart.wiretransfer');
+    }
+
+    public function quote()
+    {
+        $invoice  = Session::get('_invoice');
         $checkout = Session::get('_checkout');
 
         DB::beginTransaction();
@@ -370,7 +630,7 @@ class Cart extends Controller
             $checkout['invoice'] = $invoice;
             $checkout['status']  = 'Proceso';
 
-            $create = array_extract($checkout, ['address']);
+            $create = array_unwrap($checkout, ['address']);
 
             $quote = QuoteModel::create($create);
 
@@ -378,47 +638,41 @@ class Cart extends Controller
                 QuoteProductModel::create(array_merge($item, ['quote_id' => $quote->id]));
             }
 
-            Mail::send('layouts.messages.quote', compact('checkout'), function ($message) use ($checkout) {
-                $message->to($checkout['address']['email'])->cc(env('MAIL_USERNAME'))->subject("Cotización de MCAShop Generada - Folio: {$checkout['folio']}");
-            });
-        } catch (Exception $exception) {
+            DB::commit();
+        } catch (Exception $e) {
             DB::rollBack();
 
-            throw $exception;
+            ErrorModel::create(['tag' => 'quote', 'reference' => $checkout['folio'], 'exception' => $e->getMessage()]);
+
+            return response(['message' => 'Ocurrió un problema al registrar tu cotización. Por favor intenta nuevamente.'], 500);
         }
 
-        DB::commit();
+        // try {
+        //     Mail::send('layouts.messages.quote', compact('checkout'), function ($message) use ($checkout) {
+        //         $message->to($checkout['address']['email'])->cc(env('MAIL_USERNAME'))->subject("Cotización de MCAShop Generada - Folio: {$checkout['folio']}");
+        //     });
+        // } catch (Throwable $e) {
+        //     ErrorModel::create(['tag' => 'mail', 'reference' => $checkout['folio'], 'exception' => $e->getMessage()]);
+        // }
 
         Session::regenerateCart();
+
+        Session::forget('_invoice');
 
         return view('cart.quote');
     }
 
     public function remove($id)
     {
-        $items    = [];
-        $products = Session::get('_cart.products');
+        $products = [];
 
-        foreach ($products as $item) {
-            if ($item['id'] != $id) {
-                $items[] = $item;
+        foreach (Session::get('_cart.products') as $product) {
+            if ($product['id'] != $id) {
+                $products[] = $product;
             }
         }
 
-        $cart = $this->calculate($items);
-
-        $content = view('cart.items', compact('cart'))->render();
-
-        return response([
-            'render' => [
-                '_cart'      => [
-                    'content' => count($cart['products']),
-                ],
-                'items-html' => [
-                    'content' => $content,
-                ],
-            ],
-        ], 202);
+        return $this->calculate($products);
     }
 
     public function update($id)
@@ -426,28 +680,15 @@ class Cart extends Controller
         $products = [];
         $quantity = request('quantity');
 
-        foreach (Session::get('_cart.products') as $item) {
-            if ($item['id'] == $id) {
-                $item['quantity'] = $quantity;
+        foreach (Session::get('_cart.products') as $product) {
+            if ($product['id'] == $id) {
+                $product['quantity'] = $quantity;
             }
 
-            $products[] = $item;
+            $products[] = $product;
         }
 
-        $cart = $this->calculate($products);
-
-        $content = view('cart.items', compact('cart'))->render();
-
-        return response([
-            'render' => [
-                '_cart'      => [
-                    'content' => count($cart['products']),
-                ],
-                'items-html' => [
-                    'content' => $content,
-                ],
-            ],
-        ], 202);
+        return $this->calculate($products);
     }
 
     private function calculate($products)
@@ -457,6 +698,7 @@ class Cart extends Controller
         $cart = Session::get('_cart');
 
         foreach ($products as $item) {
+
             $item['freight']  = round($item['weight'] * $item['quantity'], 2);
             $item['unit']     = round(iva_breakdown($item['price']), 2);
             $item['value']    = $item['unit'];
@@ -478,6 +720,8 @@ class Cart extends Controller
 
         Session::put('_cart', $cart);
 
-        return $cart;
+        $view = view('cart.products', compact('cart'));
+
+        return response(['render' => ['_cart' => count($cart['products']), 'products-html' => $view->render()]]);
     }
 }

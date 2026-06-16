@@ -126,6 +126,12 @@ html, body {
 .box-blue .table-hover>tbody>tr:hover>* {
     --bs-table-bg-state: var(--box-color-bg-hover);
 }
+.card-blue {
+    --bs-card-border-color: #e3efff;
+}
+.card-shadow {
+    box-shadow: var(--bs-box-shadow);
+}
 /* -----------------------------------------------------------------------------
    Status
    ----------------------------------------------------------------------------- */

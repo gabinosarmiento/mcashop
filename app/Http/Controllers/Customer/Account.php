@@ -5,17 +5,16 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\AddressRequest;
 use App\Http\Requests\Customer\BillingRequest;
-use App\Http\Requests\Customer\CreateRequest;
-use App\Http\Requests\Customer\EditRequest;
 use App\Models\ColonyModel;
 use App\Models\CustomerAddressModel;
 use App\Models\CustomerBillingModel;
 use App\Models\CustomerModel;
 use App\Models\QuoteModel;
 use App\Models\ShippingModel;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class Account extends Controller
 {
@@ -63,7 +62,7 @@ class Account extends Controller
         return response(['render' => ['overlap-one' => $view->render()]]);
     }
 
-     # address_add
+    # address_add
     public function address_save(AddressRequest $request)
     {
         $data = $request->only('customer_id', 'name', 'phone', 'email', 'street', 'streets', 'reference', 'colony', 'city', 'state', 'country', 'zc');
@@ -92,7 +91,6 @@ class Account extends Controller
 
         return $this->address_record();
     }
-
 
     public function address_location(Request $request)
     {
@@ -200,5 +198,27 @@ class Account extends Controller
         $view = view('customer.shipping.see', compact('data'));
 
         return response(['render' => ['overlap-one' => $view->render()]]);
+    }
+
+    public function shipping_ticket($id)
+    {
+        $data = ShippingModel::where('customer_id', Auth::guard('customer')->id())->where('id', $id)->firstOrFail()->toArray();
+
+        $data['expires'] = date('Y-m-d 23:59:00', strtotime('+1 day', strtotime($data['created_at'])));
+        $data['expired'] = time() > strtotime($data['expires']);
+        $data['printed'] = date('Y-m-d H:i:s');
+
+        $html = view('customer.shipping.ticket', compact('data'))->render();
+
+        $options = new Options();
+
+        $pdf = new Dompdf($options);
+
+        $pdf->loadHtml($html);
+        $pdf->setPaper([0, 0, 250, 380]);
+
+        $pdf->render();
+
+        return response($pdf->output(), 200, ['Content-Type' => 'application/pdf']);
     }
 }

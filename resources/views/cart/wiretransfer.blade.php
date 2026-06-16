@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="breadcrumbs">
-        {{ Breadcrumbs::render('carrito/cotizar') }}
+        {{ Breadcrumbs::render('carrito/depositar') }}
     </div>
     <div class="row">
         <div class="col-md-6 mx-auto text-center">
@@ -27,27 +27,11 @@
                 <h2 class="section-title mb-4">
                     ¡Gracias por tu compra!
                     <div class="section-message">
-                        Tu pedido ha sido generado correctamente.
+                        Dispones de 24 horas para realizar tu transferencia bancaria o depósito en efectivo y enviar tu comprobante de pago a <strong>ventas@mcashop.mx</strong>.
                     </div>
-                    <div class="section-message">
-                        Enviamos un correo electrónico con los detalles de tu pedido.
-                    </div>
-                    @if(session('_success.payment_url'))
-                    <div class="fw-bold section-message">
-                        Realiza tu pago en las próximas 24 horas utilizando la ficha de pago.
-                    </div>
-                    @endif
                 </h2>
                 <div class="console mb-4">
                     <ul class="list-unstyled">
-                        @if(session('_success.payment_url'))
-                        <li class="mb-4">
-                            <a class="btn btn-sm btn-subtle" href="{{ session('_success.payment_url') }}" target="_blank">
-                                <i class="fa-light fa-ticket-perforated"></i>
-                                Descargar ficha de pago
-                            </a>
-                        </li>
-                        @endif
                         <li class="mb-2">
                             Si deseas conocer el estado de tu pedido en cualquier momento, puedes dirigirte a la sección
                             <a href="{{ route('cliente/pedido') }}" target="_blank">
@@ -55,8 +39,8 @@
                             </a>
                             en tu cuenta.
                         </li>
-                        <li>
-                            La factura de tu compra será enviada al correo electrónico registrado.
+                        <li class="mb-2">
+                            La factura será enviada al correo registrado en sus datos fiscales.
                         </li>
                     </ul>
                 </div>

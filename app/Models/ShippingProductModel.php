@@ -18,7 +18,7 @@ class ShippingProductModel extends BaseModel
      *
      * @var string
      */
-    protected $table = 'up_shipping_product';
+    protected $table = 'shipping_product';
 
     /**
      * The attributes that are mass assignable.

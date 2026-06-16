@@ -1,6 +1,6 @@
 @empty($data)
-<div class="text-wrapper text-muted">
-    Sin cotizaciones
+<div class="console">
+    No tienes cotizaciones registradas
 </div>
 @else
 <div class="box box-blue">

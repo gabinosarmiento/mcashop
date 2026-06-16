@@ -12,6 +12,7 @@ return Application::configure(basePath:dirname(__DIR__))->withRouting(
 )->withMiddleware(function (Middleware $middleware): void{
     $middleware->alias([
         'has_cart'                     => \App\Http\Middleware\HasCart::class,
+        'has_success'                  => \App\Http\Middleware\HasSuccess::class,
         'authenticate_administrative'  => \App\Http\Middleware\AuthenticateAdministrative::class,
         'authenticated_administrative' => \App\Http\Middleware\AuthenticatedAdministrative::class,
         'administrative_module'        => \App\Http\Middleware\AdministrativeModule::class,

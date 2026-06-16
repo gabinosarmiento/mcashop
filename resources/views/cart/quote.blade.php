@@ -5,7 +5,7 @@
         {{ Breadcrumbs::render('carrito/cotizar') }}
     </div>
     <div class="row">
-        <div class="col-md-5 mx-auto text-center">
+        <div class="col-md-6 mx-auto text-center">
             <div class="d-flex flex-column justify-content-center align-items-center">
                 <div class="pet-wrapper mb-4">
                     <span class="sparkle sparkle-1">
@@ -27,9 +27,7 @@
                 <h2 class="section-title mb-4">
                     ¡Gracias por crear tu cotización!
                     <div class="section-message">
-                        Una vez confirmado tu pago, procesaremos tu cotización.
-                        <br>
-                        Después recibirás un correo electrónico notificándote que tu pedido ha sido procesado con éxito.
+                        Nuestro equipo se pondrá en contacto contigo para confirmar y dar seguimiento a tu pedido.
                     </div>
                 </h2>
                 <div class="console mb-4">
@@ -41,16 +39,10 @@
                             </a>
                             en tu cuenta.
                         </li>
-                        <li class="mb-2">
-                            Para facturación, se enviarán los datos necesarios a través del correo registrado.
-                        </li>
-                        <li class="text-danger">
-                            La factura solo podrá ser expedida durante el mismo mes en que se realizó la compra.
-                        </li>
                     </ul>
                 </div>
             </div>
-            <a class="btn btn-sm btn-subtle-flat" href="{{ route('cliente/cotizacion') }}">
+            <a class="btn btn-subtle-flat" href="{{ route('cliente/cotizacion') }}">
                 Ver mi cotización
                 <i class="fal fa-arrow-right-long"></i>
             </a>

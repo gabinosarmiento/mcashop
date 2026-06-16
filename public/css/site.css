@@ -237,6 +237,10 @@ loader {
     border-radius: var(--bs-border-radius-lg);
     color: var(--bs-body-color);
 }
+.sidebar-link-sm {
+    line-height: 1;
+    font-size: 0.875rem;
+}
 .sidebar-link:hover, .sidebar-link[aria-expanded="true"] {
     color: #343a40;
     background-color: #f8f8f8;
@@ -266,7 +270,10 @@ loader {
     padding: 6px 14px;
     position: relative;
     align-items: center;
-    border-radius: 14px;
+    font-size: 0.875rem;
+}
+.sidebar-sublink-sm {
+    font-size: 0.75rem;
 }
 /* --------------------------------------------------------------------------
    Grids
@@ -285,6 +292,9 @@ loader {
 }
 .grid-categories {
     grid-template-columns: repeat(10, 1fr);
+}
+.grid-searching {
+   grid-template-columns: repeat(4, 1fr);
 }
 .grid-brands {
     gap: 1rem;
@@ -630,8 +640,9 @@ footer .list-social a:hover {
 
 .section-title {}
 .section-message {
-    font-size: 18px;
     font-weight: 400;
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
     color: var(--mca-hover-color);
 }
 .truncate {

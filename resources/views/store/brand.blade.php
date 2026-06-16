@@ -9,7 +9,7 @@
             <form data-action="{{ route('marca', [$data['brand']['id'], str($data['brand']['name'])->slug()]) }}" data-method="get" id="filter-brand-form">
                 @include('store.order')
                 <nav class="sidebar-nav">
-                    <ul class="list-unstyled" id="sidebar">
+                    <ul class="list-unstyled" id="dofinder-sidebar">
                         @foreach($data['filter'] as $filter)
                         @php($count = count($data['categories'] ?? []))
                         <li class="sidebar-item">
@@ -21,7 +21,7 @@
                                 </small>
                                 @endif
                             </span>
-                            <ul class="sidebar-submenu list-unstyled collapse" data-bs-parent="#sidebar" id="submenu-{{ $filter['id'] }}">
+                            <ul class="sidebar-submenu list-unstyled collapse" data-bs-parent="#dofinder-sidebar" id="submenu-{{ $filter['id'] }}">
                                 @foreach($filter['submenu'] as $submenu)
                                 <li class="sidebar-sublink">
                                     <div class="form-check">
@@ -43,7 +43,7 @@
         <div class="content-mca">
             <div class="grid grid-section mb-4">
                 @foreach($data['data'] as $product)
-                @include('store.card', compact('product'))
+                    @include('store.card', compact('product'))
                 @endforeach
             </div>
             @include('store.pagination')

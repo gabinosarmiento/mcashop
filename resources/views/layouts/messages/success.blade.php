@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8"/>
         <title>
-            Cotización - {{ env('APP_NAME') }}
+            Pedido - {{ env('APP_NAME') }}
         </title>
         <style>
             body {
@@ -87,7 +87,7 @@
             ¡Hola {{ $checkout['address']['name'] }}!
         </h2>
         <p>
-            Has recibido el comprobante de tu cotización con folio
+            Has recibido el comprobante de tu pedido con folio
             <strong>
                 {{ $checkout['folio'] }}
             </strong>
@@ -98,7 +98,7 @@
             exitosamente.
         </p>
         <p>
-            A continuación te proporcionamos los detalles de tu cotización.
+            A continuación te proporcionamos los detalles de tu pedido.
         </p>
         <table>
             <thead>
@@ -170,12 +170,22 @@
                         {{ number_format($checkout['shipment'], 2) }}
                     </th>
                 </tr>
+                @if($checkout['discount'] > 0)
+                <tr>
+                    <th class="right" colspan="6">
+                        Descuento
+                    </th>
+                    <th class="right">
+                        -{{ number_format($checkout['discount'], 2) }}
+                    </th>
+                </tr>
+                @endif
                 <tr>
                     <th class="right" colspan="6">
                         IVA
                     </th>
                     <th class="right">
-                        {{ number_format($checkout['vat'] , 2) }}
+                        {{ number_format($checkout['vat'], 2) }}
                     </th>
                 </tr>
                 <tr>
@@ -194,38 +204,55 @@
             </tfoot>
         </table>
         <h3>
+            Transferencia o depósito bancario
+        </h3>
+        <table class="auto">
+            <tr>
+                <th class="bg">
+                    Beneficiario
+                </th>
+                <td>
+                    Mayoristas en Cómputo de Antequera, S.A. de C.V.
+                </td>
+            </tr>
+            <tr>
+                <th class="bg">
+                    Cuenta
+                </th>
+                <td>
+                    0179712348
+                </td>
+            </tr>
+            <tr>
+                <th class="bg">
+                    CLABE
+                </th>
+                <td>
+                    012610001797123486
+                </td>
+            </tr>
+        </table>
+        <h3>
             Recuerda que
         </h3>
         <ul class="clean">
             <li>
-                La vigencia de esta cotización es de 24 horas o hasta agotar existencias.
+                Si tu pago se realizará por transferencia o depósito bancario, tienes 24 horas para completarlo y reportarlo al correo ventas@mcashop.mx.
             </li>
             <li>
-                Los precios de la cotización están en pesos mexicanos.
+                Después de comprobar tu pago, necesitamos 24 horas para procesar el pedido.
             </li>
             <li>
-                Los precios y la disponibilidad de los productos están sujetos a cambios.
-            </li>
-            <li>
-                Solo aceptamos pago anticipado y de contado, salvo indicación contraria.
-            </li>
-            <li>
-                Después de realizar tu pago, necesitamos 24 horas para procesar el pedido.
-            </li>
-            <li>
-                Nuestro tiempo de entrega es de 1 a 5 días hábiles, excepto en productos especiales o de importación.
-            </li>
-            <li>
-                Los gastos y tiempos de envío dependen de nuestros proveedores.
+                Nuestro tiempo de entrega es de 1 a 5 días hábiles.
             </li>
             <li>
                 El envío se realiza por vía terrestre.
             </li>
-            <li>
+             <li>
                 La garantía de nuestros productos está sujeta a los términos y condiciones del fabricante.
             </li>
             <li>
-                Puedes dar seguimiento a tu cotización desde tu cuenta, en la sección Cotizaciones.
+                Puedes dar seguimiento a tu pedido desde tu cuenta, en la sección Pedidos.
             </li>
         </ul>
         <h3>
@@ -258,7 +285,7 @@
             </li>
         </ul>
         <p class="gratitude">
-            Gracias por tu cotización, esperamos verte pronto.
+            Gracias por tu compra, esperamos verte pronto.
             <br/>
             Equipo
             <strong>

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Session;
 
-class HasCart
+class HasSuccess
 {
     /**
      * Handle an incoming request.
@@ -17,12 +17,10 @@ class HasCart
      */
     public function handle($request, Closure $next)
     {
-        $cart = Session::get('_cart');
-
-        if (empty($cart['products'])) {
-            return redirect('/');
+        if (Session::has('_success')) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/');
     }
 }

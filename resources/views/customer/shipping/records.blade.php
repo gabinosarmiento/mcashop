@@ -1,6 +1,6 @@
 @empty($data)
 <div class="console">
-    Sin pedidos
+    No tienes pedidos registrados
 </div>
 @else
 <div class="box box-blue">

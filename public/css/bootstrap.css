@@ -2104,7 +2104,7 @@ textarea.form-control-lg {
     padding-bottom: 0.25rem;
     padding-left: 0.5rem;
     font-size: 0.875rem;
-    border-radius: var(--bs-border-radius-sm);
+    border-radius: var(--bs-border-radius-lg);
 }
 .form-select-lg {
     padding-top: 0.5rem;
@@ -2118,9 +2118,7 @@ textarea.form-control-lg {
 }
 .form-check {
     display: block;
-    min-height: 1.5rem;
     padding-left: 1.5em;
-    margin-bottom: 1rem;
 }
 .form-check .form-check-input {
     float: left;
@@ -2141,7 +2139,7 @@ textarea.form-control-lg {
     flex-shrink: 0;
     width: 1em;
     height: 1em;
-    /*margin-top: 0.25em;*/
+    margin-top: 0.25em;
     vertical-align: top;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -2776,7 +2774,7 @@ textarea.form-control-lg {
     --bs-btn-disabled-border-color: #dc3545;
 }
 .btn-light {
-    --bs-btn-color: #000;
+    --bs-btn-color: #495057;
     --bs-btn-bg: #f3f3f3;
     --bs-btn-border-color: #f3f3f3;
     --bs-btn-hover-color: #000;
@@ -3898,7 +3896,7 @@ textarea.form-control-lg {
 }
 .card {
     --bs-card-spacer-y: 0.75rem;
-    --bs-card-spacer-x: 0.75rem;
+    --bs-card-spacer-x: 1rem;
     --bs-card-title-spacer-y: 0.5rem;
     --bs-card-title-color: ;
     --bs-card-subtitle-color: ;
