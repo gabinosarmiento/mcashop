@@ -4,7 +4,7 @@
         Editar
     </div>
     <div class="overlap-body">
-        <form id="submit-billing-form" data-method="post" data-route="actualizar" data-overlap-hide="#overlap-one">
+        <form id="ajax-billing-form" data-method="post" data-route="actualizar" data-overlap-hide="#overlap-one">
             @csrf
             <input type="hidden" name="id" value="{{ $data['id'] }}"/>
             <div class="mb-3">

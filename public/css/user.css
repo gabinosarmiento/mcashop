@@ -5,7 +5,8 @@
 :root {
     --mca-main-color: #054f9d;
     --mca-hover-color: #066ac4;
-    --mca-inactive-color: #1969b1;
+    /*--mca-inactive-color: #1969b1;*/
+    --mca-inactive-color: #4a7fba;
     --box-border-color: #e9ecef;
     --box-color-bg: #fcfcfd;
     --box-color: #5a5a5a;
@@ -41,6 +42,14 @@ html, body {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
+    .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+    }
+    .btn-icon-reverse {
+        flex-direction: row-reverse;
+    }
     background: #066ac4;
     height: 10px;
 }
@@ -234,6 +243,14 @@ html, body {
 }
 .btn-subtle-flat:hover, .btn-subtle-flat:focus-visible {
     box-shadow: 0 .125rem .25rem rgba(var(--bs-primary-rgb), .08), 0 .25rem .5rem rgba(var(--bs-primary-rgb), .05);
+}
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+}
+.btn-icon-reverse {
+    flex-direction: row-reverse;
 }
 /* -----------------------------------------------------------------------------
    Console

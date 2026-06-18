@@ -44,24 +44,6 @@ class Store extends Controller
 
         $data['product_related'] = ProductModel::has('inventory')->with('brand', 'inventory')->where('category_id', $data['category_id'])->where('status', 'Activo')->where('id', '!=', $data['id'])->inRandomOrder()->limit(6)->get()->toArray();
 
-        // if (isset($data['inventory']['price'])) {
-        //    if (empty($data['inventory']['financing'])) {
-        //       $data['inventory']['financing'] = $this->financing($data['inventory']['price']);
-
-        //       foreach ($data['inventory']['financing'] as $term) {
-        //          $term['inventory_id'] = $data['inventory']['id'];
-
-        //          $financing = ProductFinancingModel::create($term);
-
-        //          foreach ($term['installments'] as $installment) {
-        //             $installment['financing_id'] = $financing['id'];
-
-        //             ProductInstallmentModel::create($installment);
-        //          }
-        //       }
-        //    }
-        // }
-
         return view('store.product', compact('data'));
     }
 
@@ -71,7 +53,7 @@ class Store extends Controller
 
         $data['menu'] = $this->menu_categories();
 
-        $brands = BrandModel::has('products.inventory')->hasWhere('products', ['status', 'Activo'])->where('status', 'Activo')->orderByRaw('name regexp "^[0-9]"')->orderBy('name')->get()->toArray();
+        $brands = BrandModel::where('status', 'Activo')->where('menu', 1)->orderByRaw('name regexp "^[0-9]"')->orderBy('name')->get()->toArray();
 
         foreach ($brands as $brand) {
             $letter = strtoupper(substr($brand['name'], 0, 1));
@@ -90,18 +72,25 @@ class Store extends Controller
 
     public function brand(Request $request, $brand, $name, $contador = 18)
     {
+        $data = BrandModel::find($brand)->toArray();
+
         $products = ProductModel::has('inventory')->with('brand', 'inventory', 'category.features.attributes', 'features.attributes.attribute')->where('brand_id', $brand)->where('status', 'Activo');
 
-        $data['brand'] = BrandModel::find($brand)->toArray();
+        $data['filters'] = $this->brand_filter($request, $products->get());
 
         $data['menu'] = $this->menu_categories();
 
-        $data['filter'] = $this->brand_filter($products->get());
+        if ($request->filter) {
+            $categories = [];
+            foreach ($request->filter as $values) {
+                foreach ($values as $value) {
+                    $categories[] = $value;
+                }
+            }
 
-        // $data['categories'] = $request->input('categories');
-
-        if ($request->categories) {
-            $products->whereIn('category_id', $request->categories);
+            if ($categories) {
+                $products->hasWhere('category', ['name', 'in', $categories]);
+            }
         }
 
         if ($request->order) {
@@ -116,66 +105,59 @@ class Store extends Controller
                     $order = 'desc';
                 }
 
-                $products->orderByRaw("(select min(i.price) from product_inventory i inner join product_relation r on i.relation_id = r.id where r.product_id = product.id and i.created = curdate()) {$order}");
+                $products->orderByRaw("(select i.price from inventory_index i where i.product_id = product.id) {$order}");
             }
         }
 
-        $products = $products->paginate($contador)->appends($request->only('categories', 'order'))->toArray();
+        $products = $products->paginate($contador)->appends($request->only('category', 'order'));
 
-        $data = array_merge($data, $products);
+        foreach ($products as $product) {
+            $showcase = [];
 
-        // $products = $products->paginate($contador)->appends($request->only('categories', 'order'));
-        // $data = array_merge($data, ['data' => $products]);
+            foreach ($product->category->features as $feature) {
+                foreach ($feature->attributes as $attribute) {
+                    if ($attribute->showcase == 1) {
+                        $showcase[] = $attribute->attribute_id;
+                    }
+                }
+            }
 
-        // dd($data);
+            $product->setAttribute('showcase', $showcase);
+        }
+
+        $data = array_merge($data, $products->toArray());
 
         return view('store.brand', compact('data'));
     }
 
-    public function brand_filter($data)
+    public function category(Request $request, $category, $name, $contador = 18)
     {
-        $submenu    = [];
-        $categories = [];
+        $data = CategoryModel::with('features.attributes.attribute')->find($category)->toArray();
 
-        foreach ($data as $product) {
-            if (!isset($categories[$product->category->id])) {
-                $submenu[] = ['id' => $product->category->id, 'value' => $product->category->name];
-
-                $categories[$product->category->id] = true;
+        $showcase = [];
+        foreach ($data['features'] as $feature) {
+            foreach ($feature['attributes'] as $attribute) {
+                if ($attribute['showcase'] == 1) {
+                    $showcase[] = $attribute['attribute_id'];
+                }
             }
         }
 
-        $filters = [['id' => '1', 'name' => 'Categorías', 'submenu' => $submenu]];
+        $products = ProductModel::has('inventory')->with('brand', 'inventory', 'features.attributes.attribute')->where('category_id', $category)->where('status', 'Activo');
 
-        return $filters;
-    }
-
-    public function category(Request $request, $category, $name, $contador = 18)
-    {
-        $products = ProductModel::has('inventory')->with('brand', 'inventory', 'category.features.attributes', 'features.attributes.attribute')->where('category_id', $category)->where('status', 'Activo');
-
-        $category = CategoryModel::withWhere('features.attributes', ['showcase', 1])->find($category);
-
-        $showcase = $category->features->pluck('attributes')->flatten()->pluck('attribute_id')->unique()->values()->toArray();
-
-        $data['category'] = $category->toArray();
+        $data['filters'] = $this->category_filter($request, $showcase, $products->get());
 
         $data['menu'] = $this->menu_categories();
 
-        // $data['filters'] = $request->input('filters');
-        // $data['breadcrumbs'] = $this->crumb_category($category);
-
-        $data['filter'] = $this->category_filter($products->get(), $showcase);
-
-        if ($request->filters) {
-            foreach ($request->filters as $attribute => $values) {
+        if ($request->filter) {
+            foreach ($request->filter as $attribute => $values) {
                 if ($attribute === 'brand') {
                     $brands = $values;
-
-                    continue;
                 }
 
-                $attributes[$attribute] = $values;
+                if ($attribute !== 'brand') {
+                    $attributes[$attribute] = $values;
+                }
             }
 
             if (isset($attributes)) {
@@ -184,7 +166,7 @@ class Store extends Controller
                 }
             }
 
-            if (!empty($brands)) {
+            if (isset($brands)) {
                 $products->hasWhere('brand', ['name', 'in', $brands]);
             }
         }
@@ -201,72 +183,120 @@ class Store extends Controller
                     $order = 'desc';
                 }
 
-                $products->orderByRaw("(select min(i.price) from product_inventory i inner join product_relation r on i.relation_id = r.id where r.product_id = product.id and i.created = curdate()) {$order}");
+                $products->orderByRaw("(select i.price from inventory_index i where i.product_id = product.id) {$order}");
             }
         }
 
-        $products = $products->paginate($contador)->appends($request->only('filters', 'order'))->toArray();
+        $products = $products->paginate($contador)->appends($request->only('filter', 'order'));
 
-        $data = array_merge($data, $products);
+        foreach ($products as $product) {
+            $product->setAttribute('showcase', $showcase);
+        }
+
+        $data = array_merge($data, $products->toArray());
 
         return view('store.category', compact('data'));
     }
 
-    public function category_filter($products, $showcase)
+    protected function category_filter($request, $showcase, $products)
     {
-        $filters = [];
-        $index   = [];
+        $filters      = [];
+        $filter_index = [];
+        $value_index  = [];
+        $brand_index  = [];
 
-        $brands = ['B' => ['id' => 'brand', 'name' => 'Marca', 'submenu' => []]];
+        $brands = ['B' => ['id' => 'brand', 'name' => 'Marca', 'count' => 0, 'submenu' => []]];
 
         foreach ($products as $product) {
-            $brands['B']['submenu'][$product->brand->id] = [
-                'value' => $product->brand->name,
-            ];
+            if (empty($brand_index[$product->brand->id])) {
+                $checked = false;
+
+                if ($request->filter) {
+                    if (isset($request->filter['brand'])) {
+                        if (in_array($product->brand->name, $request->filter['brand'])) {
+                            $checked = true;
+                            $brands['B']['count']++;
+                        }
+                    }
+                }
+
+                $brands['B']['submenu'][] = ['value' => $product->brand->name, 'checked' => $checked];
+
+                $brand_index[$product->brand->id] = true;
+            }
 
             foreach ($product->features as $feature) {
                 foreach ($feature->attributes as $item) {
+                    if (in_array($item->attribute_id, $showcase)) {
 
-                    if (!in_array($item->attribute_id, $showcase)) {
-                        continue;
+                        if (empty($filter_index[$item->attribute_id])) {
+                            $filters[] = ['id' => $item->attribute->id, 'name' => $item->attribute->name, 'count' => 0, 'submenu' => []];
+
+                            $filter_index[$item->attribute_id] = count($filters) - 1;
+                        }
+
+                        $key = $filter_index[$item->attribute_id];
+
+                        if (empty($value_index[$item->attribute_id][$item->value])) {
+                            $checked = false;
+
+                            if ($request->filter) {
+                                if (isset($request->filter[$item->attribute_id])) {
+                                    if (in_array($item->value, $request->filter[$item->attribute_id])) {
+                                        $checked = true;
+                                        $filters[$key]['count']++;
+                                    }
+                                }
+                            }
+
+                            $value_index[$item->attribute_id][$item->value] = true;
+
+                            $filters[$key]['submenu'][] = ['value' => $item->value, 'checked' => $checked];
+                        }
                     }
-
-                    if (!isset($filters[$item->attribute_id])) {
-                        $filters[$item->attribute_id] = [
-                            'id'      => $item->attribute->id,
-                            'name'    => $item->attribute->name,
-                            'submenu' => [],
-                        ];
-                    }
-
-                    if (isset($index[$item->attribute_id][$item->value])) {
-                        continue;
-                    }
-
-                    $index[$item->attribute_id][$item->value] = true;
-
-                    $filters[$item->attribute_id]['submenu'][] = [
-                        'value' => $item->value,
-                    ];
                 }
             }
         }
 
-        uasort($brands['B']['submenu'], function ($a, $b) {
-            return $a['value'] <=> $b['value'];
-        });
+        $filters = array_sort($filters, 'name');
 
-        uasort($filters, function ($a, $b) {
-            return $a['name'] <=> $b['name'];
-        });
+        $brands['B']['submenu'] = array_sort($brands['B']['submenu'], 'value');
 
         foreach (array_keys($filters) as $key) {
-            usort($filters[$key]['submenu'], function ($a, $b) {
-                return $a['value'] <=> $b['value'];
-            });
+            $filters[$key]['submenu'] = array_sort($filters[$key]['submenu'], 'value');
         }
 
         return array_merge($brands, $filters);
+    }
+
+    protected function brand_filter($request, $data)
+    {
+        $category_index = [];
+
+        $categories = ['C' => ['id' => 1, 'name' => 'Categorías', 'count' => 0, 'submenu' => []]];
+
+        foreach ($data as $product) {
+            if (empty($category_index[$product->category->id])) {
+                $checked = false;
+
+                if ($request->filter) {
+                    if (isset($request->filter[$categories['C']['id']])) {
+                        if (in_array($product->category->name, $request->filter[$categories['C']['id']])) {
+                            $checked = true;
+                            $categories['C']['count']++;
+                        }
+                    }
+                }
+
+                $categories['C']['submenu'][] = ['value' => $product->category->name, 'checked' => $checked];
+
+                $category_index[$product->category->id] = true;
+            }
+        }
+
+        $categories['C']['submenu'] = array_sort($categories['C']['submenu'], 'value');
+
+        return $categories;
     }
 
     protected function crumb_category($data)
@@ -282,9 +312,8 @@ class Store extends Controller
         return array_reverse($breadcrumbs);
     }
 
-    public function menu_categories()
+    protected function menu_categories()
     {
-        $menu  = [];
         $items = [];
 
         $categories = CategoryModel::where('status', 'Activo')->orderBy('name')->get();
@@ -307,8 +336,9 @@ class Store extends Controller
                 foreach ($items[$parent] as $category) {
                     $children = buildItem($items, $category->id);
 
-                    if ($category->node == 1 && $category->menu == 1) {
+                    if ($category->menu == 1) {
                         $menu[] = ['id' => $category->id, 'name' => $category->name, 'submenu' => []];
+
                         continue;
                     }
 

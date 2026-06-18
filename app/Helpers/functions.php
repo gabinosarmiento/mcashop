@@ -61,28 +61,28 @@ if (!function_exists('str_folio')) {
 }
 
 if (!function_exists('str_clean')) {
-   function str_clean($value, $strict = false)
-   {
-      if (is_string($value)) {
-         # Normalize line breaks, tabs and unicode spaces.
-         $value = preg_replace('/[\r\n\t\x{00A0}]+/u', ' ', $value);
+    function str_clean($value, $strict = false)
+    {
+        if (is_string($value)) {
+            # Normalize line breaks, tabs and unicode spaces.
+            $value = preg_replace('/[\r\n\t\x{00A0}]+/u', ' ', $value);
 
-         # Apply flexible cleanup preserving readable content.
-         $value = preg_replace('/[^\p{L}\p{N}\s\.\,\-\_\#\(\)\'"\/\&]/u', '', $value);
+            # Apply flexible cleanup preserving readable content.
+            $value = preg_replace('/[^\p{L}\p{N}\s\.\,\-\_\#\(\)\'"\/\&]/u', '', $value);
 
-         # Apply aggressive cleanup for storage-safe values.
-         if ($strict === true) {
-            $value = preg_replace('/[^a-zA-Z0-9_\-\.\+]/', '', $value);
-         }
+            # Apply aggressive cleanup for storage-safe values.
+            if ($strict === true) {
+                $value = preg_replace('/[^a-zA-Z0-9_\-\.\+]/', '', $value);
+            }
 
-         # Normalize duplicated spaces.
-         $value = preg_replace('/ +/u', ' ', $value);
+            # Normalize duplicated spaces.
+            $value = preg_replace('/ +/u', ' ', $value);
 
-         return trim($value);
-      }
+            return trim($value);
+        }
 
-      return $value;
-   }
+        return $value;
+    }
 }
 
 if (!function_exists('array_unwrap')) {
@@ -105,6 +105,39 @@ if (!function_exists('array_unwrap')) {
         }
 
         return $result;
+    }
+}
+
+if (!function_exists('array_sort')) {
+    function array_sort($array, $key, $order = 'asc')
+    {
+        $count = count($array);
+
+        for ($i = 0; $i < $count; $i++) {
+            for ($j = $i + 1; $j < $count; $j++) {
+                $swap = false;
+
+                if ($order == 'asc') {
+                    if ($array[$i][$key] > $array[$j][$key]) {
+                        $swap = true;
+                    }
+                }
+
+                if ($order == 'desc') {
+                    if ($array[$i][$key] < $array[$j][$key]) {
+                        $swap = true;
+                    }
+                }
+
+                if ($swap) {
+                    $temp      = $array[$i];
+                    $array[$i] = $array[$j];
+                    $array[$j] = $temp;
+                }
+            }
+        }
+
+        return $array;
     }
 }
 

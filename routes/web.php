@@ -18,7 +18,7 @@ Route::get('inicio', [Site::class, 'index'])->name('inicio');
 Route::get('marcas', [Store::class, 'brands'])->name('marcas');
 Route::get('marca/{value}/{slug}', [Store::class, 'brand'])->name('marca');
 Route::get('categorias/{value}/{slug}', [Store::class, 'categories'])->name('categorias');
-Route::get('categorias/categoria/{value}/{slug}', [Store::class, 'category'])->name('categorias/categoria');
+Route::get('categoria/{value}/{slug}', [Store::class, 'category'])->name('categoria');
 Route::get('producto/descargar/{value}', [Store::class, 'download'])->name('producto/descargar');
 Route::get('producto/{value}/{slug}', [Store::class, 'product'])->name('producto');
 Route::get('preguntas_frecuentes', [Site::class, 'questions'])->name('preguntas_frecuentes');

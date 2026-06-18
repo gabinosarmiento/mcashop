@@ -33,6 +33,9 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     line-height: 1.3;
     color: inherit;
 }
+main {
+    flex: 1;
+}
 loader, process {
     inset: 0;
     position: fixed;
@@ -46,6 +49,14 @@ loader {
    Layout
    -------------------------------------------------------------------------- */
 
+.logo {
+    width: 168px;
+}
+.content {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 .layout-mca {
     display: grid;
     position: relative;
@@ -272,6 +283,12 @@ loader {
     align-items: center;
     font-size: 0.875rem;
 }
+.sidebar-sublink:hover {
+    color: var(--mca-main-color);
+}
+.sidebar-sublink.sidebar-caret:not(.collapsed) {
+    color: var(--mca-main-color);
+}
 .sidebar-sublink-sm {
     font-size: 0.75rem;
 }
@@ -294,7 +311,7 @@ loader {
     grid-template-columns: repeat(10, 1fr);
 }
 .grid-searching {
-   grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 .grid-brands {
     gap: 1rem;
@@ -595,29 +612,14 @@ footer .list-social a:hover {
    Responsive
    -------------------------------------------------------------------------- */
 
-@media (max-width: 767.98px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .grid-categories {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .section-title {
-        font-size: 1.5rem;
-    }
-    .section-message {
-        display: none;
-    }
-}
+/* lg */
+
 @media (max-width: 991.98px) {
-    .footer-categories {
-        padding: 0.375rem;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
     .wrapper {
-        padding-block: 25px;
+        padding-block: 20px;
+    }
+    .wrapper-middle {
+        padding-block: 10px;
     }
     .navbar-bottom {
         display: none;
@@ -628,11 +630,50 @@ footer .list-social a:hover {
         margin-top: 16px;
     }
     .layout-mca {
-        grid-template-columns: 100%
+        grid-template-columns: 100%;
     }
     .content-mca {
-        padding-left: 0
+        padding-left: 0;
     }
+    .grid-categories {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .grid-products {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-brands {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+/* md */
+
+@media (max-width: 767.98px) {
+    .logo {
+        width: 135px;
+    }
+    .section-title {
+        font-size: 1.5rem;
+    }
+    .section-message {
+        display: none;
+    }
+    .grid-brands {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .grid-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* sm */
+
+@media (max-width: 575.98px) {
+    .grid-brands {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
 /* --------------------------------------------------------------------------
    Text

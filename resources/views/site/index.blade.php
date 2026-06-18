@@ -1,11 +1,11 @@
 @extends('layouts.site')
 @section('content')
-<div class="container">
-    <div class="wrapper-middle">
+<div class="wrapper-middle">
+    <div class="container">
         <div class="row">
             <div class="col">
-                <h2 class="section-title d-block d-lg-none">
-                    Nuestra selección
+                <h2 class="section-title d-none d-sm-block">
+                    Categorías
                     <div class="section-message">
                         Todo lo mejor, al alcance de tu vista.
                     </div>
@@ -13,11 +13,11 @@
                 <div class="grid grid-categories">
                     @foreach ($data['categories'] as $value)
                     <div class="card card-simple item-up">
-                        <a href="{{ route('categorias/categoria', [$value['id'], str($value['name'])->slug()]) }}">
+                        <a href="{{ route('categoria', [$value['id'], str($value['name'])->slug()]) }}">
                             <div class="img-container">
                                 <img src="{{ asset("images/{$value['image']}") }}" class="img-loading img-cover" alt="{{ $value['id'] }}" loading="lazy"/>
                             </div>
-                            <div class="footer-categories">
+                            <div class="footer-categories d-none d-lg-block">
                                 {{ $value['name'] }}
                             </div>
                         </a>

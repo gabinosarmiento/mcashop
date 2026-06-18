@@ -105,7 +105,7 @@ limit(150))
                             <i class="fa-light fa-clipboard-list"></i>
                             Ver todas las especificaciones
                         </a>
-                        <a href="{{ route('categorias/categoria', [$data['category']['id'], str($data['category']['name'])->slug()]) }}" class="btn btn-outline-mca" role="button" title="{{ $data['category']['name'] }}" target="_blank">
+                        <a href="{{ route('categoria', [$data['category']['id'], str($data['category']['name'])->slug()]) }}" class="btn btn-outline-mca" role="button" title="{{ $data['category']['name'] }}" target="_blank">
                             Ver más productos {{ strtolower($data['category']['name']) }}
                         </a>
                     </div>

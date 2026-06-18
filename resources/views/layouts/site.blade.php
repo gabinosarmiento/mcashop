@@ -70,13 +70,12 @@
         @endenv
     </head>
     <body>
+        @yield('mobile')
+        @sectionMissing('mobile')
+        @include('partials.mobile')
+        @endif
         <div class="content">
             <loader></loader>
-            @hasSection('mobile')
-            @yield('mobile')
-            @else
-            @include('partials.mobile')
-            @endif
             <header>
                 @include('partials.navbar')
                 @include('partials.subnavbar')

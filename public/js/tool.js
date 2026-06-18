@@ -295,6 +295,7 @@
    });
 
 })();
+
 /* =========================================================
  * HTMLElement.prototype.shakeIt
  * ========================================================= */
@@ -593,7 +594,6 @@ HTMLElement.prototype.makeEditable = function(options, validate) {
  * Card Menu Dropdown — Vanilla JS
  * ========================================================= */
 (function () {
-
    document.addEventListener('click', function (event) {
       const button = event.target.closest('.menu-button');
 

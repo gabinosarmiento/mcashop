@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Customer\AddressRequest;
 use App\Http\Requests\Customer\BillingRequest;
+use App\Http\Requests\Customer\EditRequest;
 use App\Models\ColonyModel;
 use App\Models\CustomerAddressModel;
 use App\Models\CustomerBillingModel;
@@ -26,6 +27,16 @@ class Account extends Controller
         return view('customer.account.index', compact('data'));
     }
 
+    # account_record
+    public function account_record()
+    {
+        $data = CustomerModel::find(Auth::guard('customer')->id())->toArray();
+
+        $view = view('customer.account.record', compact('data'));
+
+        return response(['render' => ['record-html' => $view->render()]]);
+    }
+
     # account_edit
     public function account_edit()
     {
@@ -34,6 +45,16 @@ class Account extends Controller
         $view = view('customer.account.edit', compact('data'));
 
         return response(['render' => ['overlap-one' => $view->render()]]);
+    }
+
+    # account_update
+    public function account_update(EditRequest $request)
+    {
+        $data = $request->only('firstname', 'lastname', 'phone');
+
+        CustomerModel::find(Auth::guard('customer')->id())->update($data);
+
+        return $this->account_record();
     }
 
     # address

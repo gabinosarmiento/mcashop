@@ -7,7 +7,7 @@
             @include('customer.sidebar')
         </div>
         <div class="content-mca">
-            <div id="account-html">
+            <div id="record-html">
                 @include('customer.account.record')
             </div>
         </div>

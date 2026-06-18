@@ -1,11 +1,11 @@
 <div class="wrapper">
    <div class="container">
-      <div class="row text-white-75">
+      <div class="row g-3 text-white-75">
          <div class="col-sm-6 col-lg-3">
             <div class="mb-3">
                <img src="{{ asset('images/logo_white.svg') }}" alt="mcashop logo" width="166" height="37" loading="lazy"/>
             </div>
-            <p>
+            <p class="d-none d-sm-block">
                Descubre Mcashop, donde encontrarás una amplia variedad de productos en tecnología, cómputo y electrónica.
                <br/>
                ¡Realiza tus compras y síguenos en nuestras redes sociales para más novedades!

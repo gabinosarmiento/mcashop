@@ -36,10 +36,10 @@
             </span>
         </div>
         @if($product['inventory']['stock'] > 0)
-        <button id="action-cart-add-{{ $product['inventory']['inventory_id'] }}" class="btn btn-sm btn-outline-mca w-100" data-action="{{ route('carrito/agregar', $product['inventory']['inventory_id']) }}">
+        <button id="action-cart-add-{{ $product['inventory']['inventory_id'] }}" class="btn btn-sm btn-icon btn-outline-mca w-100" data-action="{{ route('carrito/agregar', $product['inventory']['inventory_id']) }}">
             <i class="fal fa-cart-shopping"></i>
             Agregar
-            <span class="d-none d-md-inline-block">
+            <span class="d-none d-lg-block">
                 a carrito
             </span>
         </button>

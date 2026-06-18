@@ -7,7 +7,7 @@
     {{ Breadcrumbs::render('marcas') }}
     <div class="row row-brands">
         <div class="col-12">
-            <nav class="alphabet-nav">
+            <nav class="alphabet-nav d-none d-lg-flex">
                 @foreach($data['alphabet'] as $key => $brands)
                 <a href="#letter-{{ $key }}" class="alphabet-letter">
                     {{ $key }}

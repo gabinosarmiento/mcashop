@@ -2119,6 +2119,7 @@ textarea.form-control-lg {
 .form-check {
     display: block;
     padding-left: 1.5em;
+    margin-bottom: 0.5rem;
 }
 .form-check .form-check-input {
     float: left;
@@ -2192,7 +2193,11 @@ textarea.form-control-lg {
     opacity: 0.5;
 }
 .form-switch {
+    height: 2rem;
     padding-left: 3em;
+}
+.form-switch .form-check-label {
+    line-height: 2rem;
 }
 .form-switch .form-check-input {
     --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
@@ -4220,7 +4225,7 @@ textarea.form-control-lg {
     color: var(--bs-breadcrumb-item-active-color);
 }
 .pagination {
-    --bs-pagination-padding: 0.125rem;
+    --bs-pagination-padding: 0.25rem;
     --bs-pagination-padding-x: 0.875rem;
     --bs-pagination-padding-y: 0.375rem;
     --bs-pagination-font-size: 1rem;
@@ -4281,9 +4286,9 @@ textarea.form-control-lg {
 }
 .page-link.active, .active>.page-link {
     z-index: 3;
-    color: var(--bs-pagination-active-color);
-    background-color: var(--bs-pagination-active-bg);
-    border-color: var(--bs-pagination-active-border-color);
+    color: var(--bs-pagination-hover-color);
+    background-color: var(--bs-pagination-hover-bg);
+    border-color: var(--bs-pagination-hover-border-color);
 }
 .page-link.disabled, .disabled>.page-link {
     pointer-events: none;
@@ -5543,11 +5548,13 @@ textarea.form-control-lg {
     background-size: 100% 100%;
 }
 .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e")/*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e")*/
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e")
+    /*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e")*/
     ;
 }
 .carousel-control-next-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e")/*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e")*/
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e")
+    /*rtl:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e")*/
     ;
 }
 .carousel-indicators {
@@ -5620,7 +5627,8 @@ textarea.form-control-lg {
 }
 @keyframes spinner-border {
     to {
-        transform: rotate(360deg)/* rtl:ignore */
+        transform: rotate(360deg)
+        /* rtl:ignore */
         ;
     }
 }
@@ -5740,6 +5748,10 @@ textarea.form-control-lg {
     }
 }
 @media (min-width: 576px) {
+    .offcanvas.offcanvas-start {
+        border-top-right-radius: var(--bs-border-radius-xl);
+        border-bottom-right-radius: var(--bs-border-radius-xl);
+    }
     .offcanvas-sm {
         --bs-offcanvas-height: auto;
         --bs-offcanvas-border-width: 0;
@@ -6077,6 +6089,7 @@ textarea.form-control-lg {
     background-clip: padding-box;
     outline: 0;
     transition: var(--bs-offcanvas-transition);
+    overflow: hidden;
 }
 @media (prefers-reduced-motion: reduce) {
     .offcanvas {
@@ -6088,6 +6101,8 @@ textarea.form-control-lg {
     left: 0;
     width: var(--bs-offcanvas-width);
     border-right: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+    border-top-right-radius: var(--bs-border-radius-xl);
+    border-bottom-right-radius: var(--bs-border-radius-xl);
     transform: translateX(-100%);
 }
 .offcanvas.offcanvas-end {
@@ -6095,6 +6110,8 @@ textarea.form-control-lg {
     right: 0;
     width: var(--bs-offcanvas-width);
     border-left: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
+    border-top-left-radius: var(--bs-border-radius-xl);
+    border-bottom-left-radius: var(--bs-border-radius-xl);
     transform: translateX(100%);
 }
 .offcanvas.offcanvas-top {
@@ -6113,6 +6130,12 @@ textarea.form-control-lg {
     max-height: 100%;
     border-top: var(--bs-offcanvas-border-width) solid var(--bs-offcanvas-border-color);
     transform: translateY(100%);
+}
+@media (max-width: 400px) {
+    .offcanvas.offcanvas-start,
+    .offcanvas.offcanvas-end {
+        border-radius: 0 !important;
+    }
 }
 .offcanvas.showing, .offcanvas.show:not(.hiding) {
     transform: none;
@@ -6136,9 +6159,23 @@ textarea.form-control-lg {
     opacity: 0.5;
 }
 .offcanvas-header {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+}
+.offcanvas-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 30px;
+    pointer-events: none;
+    background: linear-gradient( to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 .offcanvas-header .btn-close {
     padding: calc(var(--bs-offcanvas-padding-y) * 0.5) calc(var(--bs-offcanvas-padding-x) * 0.5);

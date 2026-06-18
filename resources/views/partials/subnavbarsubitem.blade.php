@@ -1,6 +1,6 @@
 <li class="dropdown-node">
     @if(empty($item['submenu']))
-    <a class="dropdown-item" href="{{ route('categorias/categoria', [$item['id'], str($item['name'])->slug()]) }}">
+    <a class="dropdown-item" href="{{ route('categoria', [$item['id'], str($item['name'])->slug()]) }}">
         {{ $item['name'] }}
     </a>
     @else

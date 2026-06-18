@@ -37,7 +37,7 @@
                                         <button type="button" class="btn btn-link" id="action-remove-cart-{{ $item['id'] }}" data-action="{{ route('carrito/remover', $item['id']) }}">
                                             <i class="fa-light fa-circle-xmark"></i>
                                         </button>
-                                        <input type="text" name="quantity" id="change-quantity" class="form-control form-control-sm text-center" value="{{ $item['quantity'] }}" data-min="1" data-max="{{ $item['stock'] }}" data-action="{{ route('carrito/actualizar', $item['id']) }}"/>
+                                        <input type="text" name="quantity" id="change-quantity" class="form-control form-control-sm text-center" value="{{ $item['quantity'] }}" data-validate="integer|min:1|max:{{ $item['stock'] }}" data-action="{{ route('carrito/actualizar', $item['id']) }}"/>
                                     </div>
                                 </td>
                                 <th width="130" class="text-end">

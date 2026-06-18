@@ -4,7 +4,7 @@
         Agregar
     </div>
     <div class="overlap-body">
-        <form id="submit-address-form" data-method="post" data-route="guardar" data-overlap-hide="#overlap-one">
+        <form id="ajax-address-form" data-method="post" data-route="guardar" data-overlap-hide="#overlap-one">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">

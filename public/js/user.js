@@ -21,8 +21,8 @@
     }];
 
     document.addEventListener('submit', function (e) {
-        const submit = e.target.closest('form[id^="submit-"]');
-        if (submit) {
+        const ajax = e.target.closest('form[id^="ajax-"]');
+        if (ajax) {
             e.preventDefault();
             ajax_request(e.target);
         }
@@ -47,6 +47,17 @@
     });
 
     document.addEventListener('change', function(e) {
+        const submit = e.target.closest('[id^="submit-"]');
+        if (submit) {
+            const form = submit.closest('form');
+
+            if (form) {
+                form.requestSubmit();
+            }
+        }
+    });
+
+    document.addEventListener('change', function(e) {
         const change = e.target.closest('[id^="change-"]');
         if (change) {
             e.preventDefault();
@@ -54,7 +65,6 @@
                 return;
             }
             ajax_request(change);
-            return;
         }
     });
 
@@ -245,27 +255,39 @@
     }
 
     function validate_change(element) {
-        const value = parseInt(element.value);
+        const validate = element.dataset.validate;
 
-        if (isNaN(value)) {
-            element.value = element.previousValue;
-            element.shakeIt();
-            return false;
-        }
+        if (validate) {
+            let valid = true;
 
-        if (element.dataset.min) {
-            if (value < parseInt(element.dataset.min)) {
-                element.value = element.previousValue;
-                element.shakeIt();
-                return false;
-            }
-        }
+            const value = element.value;
+            const rules = validate.split('|');
 
-        if (element.dataset.max) {
-            if (value > parseInt(element.dataset.max)) {
-                element.value = element.previousValue;
-                element.shakeIt();
-                return false;
+            for (const rule of rules) {
+                const [name, param] = rule.split(':');
+
+                if (name == 'integer') {
+                    valid = Number.isInteger(Number(value));
+                }
+
+                if (name == 'min') {
+                    valid = Number(value) >= Number(param);
+                }
+
+                if (name == 'max') {
+                    valid = Number(value) <= Number(param);
+                }
+
+                if (name == 'regex') {
+                    valid = new RegExp(param).test(value);
+                }
+
+                if (valid === false) {
+                    element.value = element.previousValue;
+                    element.shakeIt();
+
+                    return false;
+                }
             }
         }
 

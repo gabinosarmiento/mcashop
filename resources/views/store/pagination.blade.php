@@ -1,6 +1,21 @@
 @if($data['last_page'] > 1)
 <div class="wrapper">
-    <nav class="d-flex justify-content-center">
+    <nav class="d-flex flex-column align-items-center">
+        <p class="text-muted mb-3">
+            {!! __('Showing') !!}
+            <span class="fw-semibold">
+                {{ $data['from'] }}
+            </span>
+            {!! __('to') !!}
+            <span class="fw-semibold">
+                {{ $data['to'] }}
+            </span>
+            {!! __('of') !!}
+            <span class="fw-semibold">
+                {{ $data['total'] }}
+            </span>
+            {!! __('results') !!}
+        </p>
         <div class="d-sm-none">
             <ul class="pagination">
                 @if($data['prev_page_url'])
@@ -31,24 +46,7 @@
                 @endif
             </ul>
         </div>
-        <div class="d-none d-sm-flex flex-column align-items-center">
-            <div>
-                <p class="text-muted">
-                    {!! __('Showing') !!}
-                    <span class="fw-semibold">
-                        {{ $data['from'] }}
-                    </span>
-                    {!! __('to') !!}
-                    <span class="fw-semibold">
-                        {{ $data['to'] }}
-                    </span>
-                    {!! __('of') !!}
-                    <span class="fw-semibold">
-                        {{ $data['total'] }}
-                    </span>
-                    {!! __('results') !!}
-                </p>
-            </div>
+        <div class="d-none d-sm-block">
             <ul class="pagination">
                 @if($data['prev_page_url'])
                 <li class="page-item">

@@ -210,7 +210,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="box box-blue">
+            <div class="box box-blue card-hover">
                 <div class="box-header">
                     <div class="box-title">
                         Resumen del pedido
@@ -297,7 +297,7 @@
                     <a class="btn btn-light w-100 mb-2" href="{{ route('carrito/cotizar') }}">
                         Hacer cotización
                     </a>
-                    <button id="action-cart-mercadopago" class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" data-action="{{ route('carrito/mercadopago') }}" data-overlap-show="#overlap-one">
+                    <button id="action-cart-mercadopago" class="btn btn-icon btn-primary w-100 fw-semibold" data-action="{{ route('carrito/mercadopago') }}" data-overlap-show="#overlap-one">
                         <i class="fa-regular fa-credit-card"></i>
                         Pagar con Mercado Pago
                     </button>

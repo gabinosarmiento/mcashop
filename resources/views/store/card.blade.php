@@ -36,13 +36,10 @@
                 @php($shown = 0)
                 @foreach($product['features'] as $feature)
                 @foreach($feature['attributes'] as $attribute)
-                @if($shown>
-                3)
+                @if($shown >= 4)
                 @break(2)
                 @endif
-                @foreach($product['category']['features'] as $featurex)
-                @foreach($featurex['attributes'] as $attributex)
-                @if($attribute['attribute_id'] === $attributex['attribute_id'])
+                @if(in_array($attribute['attribute_id'], $product['showcase']))
                 <li>
                     <div class="fw-medium">
                         {{ $attribute['attribute']['name'] }}
@@ -53,21 +50,19 @@
                 @endif
                 @endforeach
                 @endforeach
-                @endforeach
-                @endforeach
             </ul>
-            <a href="{{ route('producto', [$product['id'], str($product['name'])->slug()]) }}" class="btn btn-sm btn-outline-primary w-100">
-                <i class="fal fa-box-open"></i>
+            <a href="{{ route('producto', [$product['id'], str($product['name'])->slug()]) }}" class="btn btn-sm btn-icon btn-outline-primary w-100">
+                <i class="fal fa-eyes"></i>
                 Ver producto
             </a>
         </div>
     </figcaption>
     <div class="card-footer border-0">
         @if($product['inventory']['stock'] > 0)
-        <button id="action-cart-add-{{ $product['inventory']['inventory_id'] }}" class="btn btn-sm btn-outline-mca w-100" data-action="{{ route('carrito/agregar', $product['inventory']['inventory_id']) }}">
+        <button id="action-cart-add-{{ $product['inventory']['inventory_id'] }}" class="btn btn-sm btn-icon btn-outline-mca w-100" data-action="{{ route('carrito/agregar', $product['inventory']['inventory_id']) }}">
             <i class="fal fa-cart-shopping"></i>
             Agregar
-            <span class="d-none d-md-inline-block">
+            <span class="d-none d-lg-block">
                 a carrito
             </span>
         </button>

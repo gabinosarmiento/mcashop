@@ -23,7 +23,7 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="session-tab" role="tabpanel" aria-labelledby="session-tab-button" tabindex="0">
-                    <form id="submit-customer-validate-form" data-action="{{ route('cliente/acceso/validar') }}" data-method="post">
+                    <form id="ajax-customer-validate-form" data-action="{{ route('cliente/acceso/validar') }}" data-method="post">
                         @csrf
                         <div class="mb-2">
                             <label class="visually-hidden" for="login-email">
@@ -54,7 +54,7 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="register-tab" role="tabpanel" aria-labelledby="register-tab-button" tabindex="0">
-                    <form id="submit-customer-create-form" data-action="{{ route('cliente/crear') }}" data-method="post">
+                    <form id="ajax-customer-create-form" data-action="{{ route('cliente/crear') }}" data-method="post">
                         @csrf
                         <div class="mb-2">
                             <label class="visually-hidden" for="firstname">
