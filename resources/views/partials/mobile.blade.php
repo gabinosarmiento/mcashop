@@ -1,3 +1,4 @@
+@isset($data['menu'])
 <div class="offcanvas offcanvas-start" tabindex="-1" id="mobile-sidebar">
     <div class="offcanvas-header">
         <a href="{{ route('inicio') }}">
@@ -20,3 +21,4 @@
         </nav>
     </div>
 </div>
+@endisset

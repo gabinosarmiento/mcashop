@@ -5,7 +5,6 @@
 :root {
     --mca-main-color: #054f9d;
     --mca-hover-color: #066ac4;
-    /*--mca-inactive-color: #1969b1;*/
     --mca-inactive-color: #4a7fba;
     --box-border-color: #e9ecef;
     --box-color-bg: #fcfcfd;
@@ -83,46 +82,6 @@ html, body {
     background: url('assets/reset.jpg') center/cover no-repeat;
 }
 /* -----------------------------------------------------------------------------
-   Boxes
-   ----------------------------------------------------------------------------- */
-
-.box {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    background: #fff;
-    border: 1px solid var(--box-border-color);
-    border-radius: 1.125rem;
-    margin-bottom: 1rem;
-}
-.box-header {
-    display: block;
-    padding: .625rem 1rem;
-    color: var(--box-color);
-    background-color: var(--box-color-bg);
-    border-bottom: 1px solid var(--box-border-color);
-}
-.box-body {
-    padding: 0;
-}
-.box-body-padding {
-    padding: 0 .75rem;
-}
-.box-footer {
-    padding: .75rem;
-}
-.box-title {
-    font-size: 18px;
-    font-weight: 500;
-}
-.box-scroll {
-    max-height: 34rem;
-    overflow: auto;
-}
-.box th, .box td {
-    border-color: var(--box-border-color);
-}
-/* -----------------------------------------------------------------------------
    Box variants
    ----------------------------------------------------------------------------- */
 
@@ -134,6 +93,9 @@ html, body {
 }
 .box-blue .table-hover>tbody>tr:hover>* {
     --bs-table-bg-state: var(--box-color-bg-hover);
+}
+.box-blue th, .box-blue td {
+    border-color: var(--box-border-color);
 }
 .card-blue {
     --bs-card-border-color: #e3efff;
@@ -252,6 +214,11 @@ html, body {
 .btn-icon-reverse {
     flex-direction: row-reverse;
 }
+.badge-subtle {
+    color: var(--bs-primary-text-emphasis);
+    background-color: var(--bs-primary-bg-subtle);
+    font-weight: 500;
+}
 /* -----------------------------------------------------------------------------
    Console
    ----------------------------------------------------------------------------- */
@@ -290,4 +257,112 @@ html, body {
     display: flex;
     align-items: center;
     gap: .5rem;
+}
+/* -----------------------------------------------------------------------------
+   Boxes
+   ----------------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------------
+   Boxes
+   ----------------------------------------------------------------------------- */
+.box {
+    --box-bg: #fff;
+    --box-gap: .5rem;
+    --box-radius: 1.125rem;
+    --box-padding-x: 1.5rem;
+    --box-padding-y: 1.5rem;
+    --box-scroll-height: 34rem;
+    --box-title-size: 18px;
+    position: relative;
+    overflow: hidden;
+    background: var(--box-bg);
+    border: 1px solid var(--box-border-color);
+    border-radius: var(--box-radius);
+}
+
+.box-header {
+    padding-inline: calc(var(--box-padding-x) * .5);
+    padding-block: calc(var(--box-padding-y) * .5);
+    color: var(--box-color);
+    background-color: var(--box-color-bg);
+    border-bottom: 1px solid var(--box-border-color);
+}
+
+.box-body {
+    padding: 0;
+}
+
+.box-body-padding {
+    padding-inline: calc(var(--box-padding-x) * .5);
+}
+
+.box-footer {
+    padding: calc(var(--box-padding-y) * .5) calc(var(--box-padding-x) * .5);
+}
+
+.box-title {
+    font-size: var(--box-title-size);
+    font-weight: 500;
+}
+
+.box-scroll {
+    max-height: var(--box-scroll-height);
+    overflow: auto;
+}
+
+.box-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: var(--box-gap);
+    padding-block: calc(var(--box-padding-y) * .5);
+}
+
+.box-row:not(:last-child) {
+    border-bottom: 1px solid var(--box-border-color);
+}
+
+.box-item {
+    display: flex;
+    align-items: center;
+    gap: var(--box-gap);
+    justify-content: flex-start;
+}
+
+.box-between {
+    justify-content: space-between;
+}
+
+.box-end {
+    justify-content: flex-end;
+}
+
+@media (min-width: 576px) {
+    .box-sm-end {
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 768px) {
+    .box-md-end {
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 992px) {
+    .box-lg-end {
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 1200px) {
+    .box-xl-end {
+        justify-content: flex-end;
+    }
+}
+
+@media (min-width: 1400px) {
+    .box-xxl-end {
+        justify-content: flex-end;
+    }
 }

@@ -253,6 +253,11 @@ p {
 p:last-child {
     margin-bottom: 0;
 }
+@media (min-width: 768px) {
+    h6, h5, h4, h3, h2, h1 {
+        margin-bottom: 0.5rem;
+    }
+}
 abbr[title] {
     -webkit-text-decoration: underline dotted;
     text-decoration: underline dotted;
@@ -358,6 +363,7 @@ img, svg {
     vertical-align: middle;
 }
 table {
+    width: 100%;
     caption-side: bottom;
     border-collapse: collapse;
 }
@@ -370,7 +376,7 @@ caption {
 th {
     text-align: inherit;
     text-align: -webkit-match-parent;
-    font-weight: 500;
+    font-weight: 600;
 }
 thead, tbody, tfoot, tr, td, th {
     border-color: inherit;
@@ -1642,7 +1648,7 @@ progress {
     --bs-table-bg-type: initial;
     --bs-table-color-state: initial;
     --bs-table-bg-state: initial;
-    --bs-table-color: var(--bs-emphasis-color);
+    --bs-table-color: var(--bs-body-color);
     --bs-table-bg: var(--bs-body-bg);
     --bs-table-border-color: var(--bs-border-color);
     --bs-table-accent-bg: transparent;
@@ -1652,7 +1658,6 @@ progress {
     --bs-table-active-bg: rgba(var(--bs-emphasis-color-rgb), 0.1);
     --bs-table-hover-color: var(--bs-emphasis-color);
     --bs-table-hover-bg: rgba(var(--bs-emphasis-color-rgb), 0.075);
-    width: 100%;
     vertical-align: top;
     border-color: var(--bs-table-border-color);
 }
@@ -1660,7 +1665,8 @@ progress {
     border-bottom-width: 0;
 }
 .table> :not(caption)>*>* {
-    padding: 0.5rem 1rem;
+    --bs-gutter-y: 0.5rem;
+    padding: var(--bs-gutter-y) calc(var(--bs-gutter-x) * .5);
     color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
     background-color: var(--bs-table-bg);
     border-bottom-width: var(--bs-border-width);
@@ -6239,6 +6245,11 @@ textarea.form-control-lg {
     display: block;
     clear: both;
     content: "";
+}
+.text-money::before {
+    content: "$";
+    font-size: .875rem;
+    color: var(--bs-secondary-color);
 }
 .text-bg-primary {
     color: #fff !important;

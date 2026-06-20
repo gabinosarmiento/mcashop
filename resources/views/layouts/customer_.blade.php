@@ -63,6 +63,11 @@
         @endenv
     </head>
     <body>
+        @yield('mobile')
+        @sectionMissing('mobile')
+        @include('partials.mobile')
+        @endif
+
         <div class="dashboard">
             <loader></loader>
             @include('customer.mobile')

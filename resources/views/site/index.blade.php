@@ -4,12 +4,6 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2 class="section-title d-none d-sm-block">
-                    Categorías
-                    <div class="section-message">
-                        Todo lo mejor, al alcance de tu vista.
-                    </div>
-                </h2>
                 <div class="grid grid-categories">
                     @foreach ($data['categories'] as $value)
                     <div class="card card-simple item-up">

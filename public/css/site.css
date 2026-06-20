@@ -217,6 +217,7 @@ loader {
 .dropdown-node:hover>.submenu {
     display: block;
 }
+
 /* --------------------------------------------------------------------------
    Sidebar
    -------------------------------------------------------------------------- */
@@ -393,7 +394,7 @@ loader {
     padding: 2px;
     overflow: hidden;
     border: 1px solid var(--box-border-color);
-    border-radius: 50%;
+    border-radius: var(--bs-border-radius-lg);
     box-sizing: border-box;
 }
 /* --------------------------------------------------------------------------
@@ -513,7 +514,7 @@ loader {
 }
 .list-sm li {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: .5rem;
     margin-bottom: .25rem;
     break-inside: avoid;
@@ -527,11 +528,7 @@ loader {
     columns: 2;
     column-gap: 2rem;
 }
-@media (max-width: 767.98px) {
-    .list-columns {
-        columns: 1;
-    }
-}
+
 /* --------------------------------------------------------------------------
    Carousel
    -------------------------------------------------------------------------- */
@@ -609,77 +606,10 @@ footer .list-social a:hover {
     background-color: #ffffff;
 }
 /* --------------------------------------------------------------------------
-   Responsive
-   -------------------------------------------------------------------------- */
-
-/* lg */
-
-@media (max-width: 991.98px) {
-    .wrapper {
-        padding-block: 20px;
-    }
-    .wrapper-middle {
-        padding-block: 10px;
-    }
-    .navbar-bottom {
-        display: none;
-    }
-    .custom-search {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 16px;
-    }
-    .layout-mca {
-        grid-template-columns: 100%;
-    }
-    .content-mca {
-        padding-left: 0;
-    }
-    .grid-categories {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    .grid-products {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-brands {
-        grid-template-columns: repeat(6, 1fr);
-    }
-}
-/* md */
-
-@media (max-width: 767.98px) {
-    .logo {
-        width: 135px;
-    }
-    .section-title {
-        font-size: 1.5rem;
-    }
-    .section-message {
-        display: none;
-    }
-    .grid-brands {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .grid-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-/* sm */
-
-@media (max-width: 575.98px) {
-    .grid-brands {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-products {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-}
-/* --------------------------------------------------------------------------
    Text
    -------------------------------------------------------------------------- */
 
-.section-title {}
+.section-subtitle,
 .section-message {
     font-weight: 400;
     font-size: 1.125rem;
@@ -752,4 +682,77 @@ footer .list-social a:hover {
     100% {
         opacity: 0;
     }
+}
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+/* lg */
+
+@media (max-width: 991.98px) {
+    .wrapper {
+        padding-block: 20px;
+    }
+    .wrapper-middle {
+        padding-block: 10px;
+    }
+    .navbar-bottom {
+        display: none;
+    }
+    .custom-search {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 16px;
+    }
+    .layout-mca {
+        grid-template-columns: 100%;
+    }
+    .content-mca {
+        padding-left: 0;
+    }
+    .grid-categories {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .grid-products {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-brands {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+/* md */
+
+@media (max-width: 767.98px) {
+    .logo {
+        width: 135px;
+    }
+    .section-title {
+        font-size: 1.375rem;
+    }
+    .section-subtitle {
+        font-size: 1rem;
+    }
+    .section-message {
+        display: none;
+    }
+    .wrapper-bottom {
+        padding-bottom: 30px;
+    }
+    .grid-brands {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .grid-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* sm */
+
+@media (max-width: 575.98px) {
+    .grid-brands {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }

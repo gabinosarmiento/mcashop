@@ -1,3 +1,4 @@
+@isset($data['menu'])
 <nav class="navbar navbar-bottom">
     <div class="container">
         <ul class="nav">
@@ -27,3 +28,4 @@
         </ul>
     </div>
 </nav>
+@endisset

@@ -1,4 +1,4 @@
-@extends('layouts.customer')
+@extends('layouts.site')
 @section('content')
 <div class="container">
     {{ Breadcrumbs::render('cliente', 'Cotizaciones') }}
