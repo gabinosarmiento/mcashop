@@ -229,7 +229,7 @@ class Store extends Controller
                 foreach ($feature->attributes as $item) {
                     if (in_array($item->attribute_id, $showcase)) {
 
-                        if (empty($filter_index[$item->attribute_id])) {
+                        if (!isset($filter_index[$item->attribute_id])) {
                             $filters[] = ['id' => $item->attribute->id, 'name' => $item->attribute->name, 'count' => 0, 'submenu' => []];
 
                             $filter_index[$item->attribute_id] = count($filters) - 1;
@@ -237,7 +237,7 @@ class Store extends Controller
 
                         $key = $filter_index[$item->attribute_id];
 
-                        if (empty($value_index[$item->attribute_id][$item->value])) {
+                        if (!isset($value_index[$item->attribute_id][$item->value])) {
                             $checked = false;
 
                             if ($request->filter) {

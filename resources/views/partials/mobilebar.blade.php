@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 @foreach($data['menu'] as $menu)
-                @include('partials.mobilesubitem', ['item' => $menu, 'submenu' => false ])
+                @include('partials.mobilebarsubitem', ['item' => $menu, 'submenu' => false ])
                 @endforeach
             </ul>
         </nav>

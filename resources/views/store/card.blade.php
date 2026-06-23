@@ -2,9 +2,9 @@
     <a href="{{ route('marca', [$product['brand_id'], str($product['brand']['name'])->slug()]) }}" class="card-brand brand-sm item-scale" target="_blank">
         <img src="{{ asset($product['brand']['image']) }}" class="img-fluid" alt="marca-logo"/>
     </a>
-    <div class="img-container card-image">
+    <div class="card-img img-container">
         <a href="{{ route('producto', [$product['id'], str($product['name'])->slug()]) }}">
-            <img src="{{ asset($product['image']) }}" class="img-cover img-loading" alt="{{ $product['sku'] }}" width="226" height="226" loading="lazy"/>
+            <img src="{{ asset($product['image']) }}" class="img-cover img-loading rounded-3" alt="{{ $product['sku'] }}" width="226" height="226" loading="lazy"/>
         </a>
     </div>
     <figcaption class="card-inner">

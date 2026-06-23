@@ -1,12 +1,12 @@
 <nav class="navbar navbar-mca navbar-expand-lg">
-    <div class="container">
+    <div class="container gap-2 gap-lg-4">
         <button type="button" id="sidebar-open" class="navbar-toggler" title="Menú" data-bs-toggle="offcanvas" data-bs-target="#mobile-sidebar" aria-controls="mobile-sidebar">
             <i class="fal fa-bars"></i>
         </button>
         <a href="{{ route('inicio') }}">
             <img src="{{ asset('images/logo_white.svg') }}" class="logo" alt="mcashop" width="168"/>
         </a>
-        <ul class="nav nav-mca ms-lg-auto align-items-center">
+        <ul class="nav nav-mca ms-lg-auto">
             @auth('customer')
             <li class="nav-item dropdown">
                 <a class="nav-link" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,7 +37,7 @@
             </li>
             @endauth
             <li class="nav-item">
-                <a class="nav-link position-relative" href="{{ route('carrito') }}" data-tag="{{ count(session('_cart')) }}" aria-label="Ver a carrito">
+                <a class="nav-link position-relative" href="{{ route('carrito') }}" data-tag="{{ count(session('_cart')) }}" aria-label="Ver carrito">
                     <span id="_cart" class="badge rounded-pill bg-danger badge-cart">
                         {{ count(session('_cart.products')) }}
                     </span>
@@ -45,17 +45,10 @@
                 </a>
             </li>
         </ul>
-        <div id="dofinder-search" class="custom-search">
-            <form id="dofinder-form">
-                <input type="search" name="dofinder-input" id="dofinder-input" class="form-control" placeholder="Escribe el producto a buscar"/>
-            </form>
-        </div>
-        <!-- <script>
-           document.getElementById('dofinder-input').addEventListener('change', function (e) {
-              gtag('event', 'search', {
-                 search_term: e.target.value
-              });
-           });
-        </script> -->
+        @unless(isset($search))
+        <form id="dofinder-form">
+            <input type="search" name="dofinder-input" id="dofinder-input" class="form-control" placeholder="Escribe el producto a buscar"/>
+        </form>
+        @endif
     </div>
 </nav>

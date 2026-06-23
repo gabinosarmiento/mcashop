@@ -45,7 +45,7 @@ class SearchService
 
         $data['search'] = $results->toArray();
 
-        $data['filter'] = $this->search_filter($results);
+        $data['filters'] = $this->search_filter($results);
 
         return $data;
     }

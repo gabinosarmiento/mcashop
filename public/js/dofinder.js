@@ -26,7 +26,6 @@
          modalId: 'dofinder-modal',
          modalSelector: '#dofinder-modal',
          closeSelector: '.dofinder-close',
-         formSelector: '#dofinder-form',
          inputSelector: 'input[name="dofinder-input"]',
          filterSelector: '#dofilter-form',
          classShowing: 'dofinder-showing',
@@ -38,7 +37,7 @@
       }, options);
 
       function getForm() {
-         return instance.querySelector(settings.formSelector);
+         return instance;
       }
 
       function getInput() {
@@ -57,7 +56,6 @@
          return document.querySelector(settings.modalSelector);
       }
 
-      // AGREGADO: obtener contenedor de progreso
       function getProgress() {
          var modal = getModal();
 
@@ -68,7 +66,6 @@
          return modal.querySelector('.dofinder-progress');
       }
 
-      // AGREGADO: obtener barra de progreso
       function getProgressBar() {
          var modal = getModal();
 
@@ -79,7 +76,6 @@
          return modal.querySelector('.dofinder-progress-bar');
       }
 
-      // AGREGADO: mostrar progreso
       function showProgress() {
          var progress = getProgress();
 
@@ -90,7 +86,6 @@
          progress.style.opacity = '1';
       }
 
-      // AGREGADO: ocultar progreso
       function hideProgress() {
          var progress = getProgress();
 
@@ -101,7 +96,6 @@
          progress.style.opacity = '0';
       }
 
-      // AGREGADO: iniciar progreso optimista
       function startProgress(refs) {
          var bar = getProgressBar();
 
@@ -128,7 +122,6 @@
          }, 180);
       }
 
-      // AGREGADO: avanzar progreso sin llegar a 100
       function advanceProgress(refs) {
          var bar = getProgressBar();
 
@@ -162,7 +155,6 @@
          bar.style.width = refs.progressValue + '%';
       }
 
-      // AGREGADO: detener timer de progreso
       function stopProgressTimer(refs) {
          if (!refs.progressTimer) {
             return;
@@ -172,7 +164,6 @@
          refs.progressTimer = null;
       }
 
-      // AGREGADO: completar progreso
       function finishProgress(refs) {
          var bar = getProgressBar();
 
@@ -193,7 +184,6 @@
          }, 220);
       }
 
-      // AGREGADO: limpiar progreso cuando aborta o cierra
       function resetProgress(refs) {
          var bar = getProgressBar();
 
@@ -357,7 +347,6 @@
 
          refs.controller = new AbortController();
 
-         // AGREGADO: iniciar barra optimista
          startProgress(refs);
 
          var url = settings.url + '?' + buildParams(query, partial);
@@ -375,7 +364,6 @@
                return;
             }
 
-            // AGREGADO: completar barra al terminar
             finishProgress(refs);
 
             var existingModal = getModal();
@@ -557,7 +545,7 @@
             handleInput(refs);
          });
 
-         instance.addEventListener('click', function(e) {
+         document.addEventListener('click', function(e) {
             handleClick(refs, e);
          });
 
@@ -624,8 +612,10 @@
    };
 
    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('#dofinder-search').forEach(function(container) {
-         container.dofinder('init');
-      });
+      var form = document.getElementById('dofinder-form');
+
+      if (form) {
+         form.dofinder('init');
+      }
    });
 })();

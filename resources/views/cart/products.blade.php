@@ -1,4 +1,4 @@
-@empty($cart['products'])
+@empty($data['products'])
 <div class="console">
     No hay productos en tu carrito por el momento
 </div>
@@ -13,7 +13,7 @@
             </div>
             <div class="box-body">
                 <div id="table-carrito" class="container">
-                    @foreach($cart['products'] as $item)
+                    @foreach($data['products'] as $item)
                     <div class="row box-row">
                         <div class="col-12 col-lg-8">
                             <div class="d-flex gap-2">
@@ -63,7 +63,7 @@
                     <tr>
                         <td colspan="2">
                             <strong>
-                                ({{ count($cart['products']) }}) Productos
+                                ({{ count($data['products']) }}) Productos
                             </strong>
                         </td>
                     </tr>
@@ -76,7 +76,7 @@
                         </th>
                         <th class="text-end align-bottom" width="120">
                             <strong class="text-money">
-                                {{ number_format($cart['total'], 2) }}
+                                {{ number_format($data['total'], 2) }}
                             </strong>
                         </th>
                     </tr>
@@ -128,7 +128,7 @@
     <script>
         gtag('event', 'view_cart', {
             currency: 'MXN',
-            value: {{ $cart['total'] }},
+            value: {{ $data['total'] }},
             items: {!! json_encode(
                 array_map(function ($item) {
                     return [
@@ -140,7 +140,7 @@
                         'quantity' => $item['quantity'],
                     ];
                 },
-            $cart['products'])) !!}
+            $data['products'])) !!}
         });
     </script>
     @endempty

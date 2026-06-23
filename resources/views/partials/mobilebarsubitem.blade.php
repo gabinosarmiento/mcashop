@@ -9,7 +9,7 @@
     </span>
     <ul class="sidebar-submenu list-unstyled collapse" id="submenu-{{ $item['id'] }}">
         @foreach($item['submenu'] as $subitem)
-        @include('partials.mobilesubitem', ['item' => $subitem,'submenu' => true])
+        @include('partials.mobilebarsubitem', ['item' => $subitem,'submenu' => true])
         @endforeach
     </ul>
     @endif

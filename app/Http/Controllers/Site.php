@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CategoryModel;
 use App\Models\ProductModel;
 
-class Site extends SiteController
+class Site extends Controller
 {
     public function index()
     {

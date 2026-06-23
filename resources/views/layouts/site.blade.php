@@ -25,8 +25,8 @@
         <link href="{{ asset('css/tool.css?v=' . config('app.version')) }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('css/user.css?v=' . config('app.version')) }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('css/site.css?v=' . config('app.version')) }}" rel="stylesheet" type="text/css"/>
-        <link rel="preload" href="{{ asset('css/magiczoomplus.css') }}" as="style" onload="this.rel='stylesheet'"/>
-        <link rel="preload" href="{{ asset('css/cookie.css') }}" as="style" onload="this.rel='stylesheet'"/>
+        <link href="{{ asset('css/magiczoomplus.css') }}" rel="preload" as="style" onload="this.rel='stylesheet'"/>
+        <link href="{{ asset('css/cookie.css') }}" rel="preload" as="style" onload="this.rel='stylesheet'"/>
         <script src="{{ asset('js/assets/notification.js?v=' . config('app.version')) }}" type="text/javascript"></script>
         <script src="{{ asset('js/assets/imgloader.js?v=' . config('app.version')) }}" type="text/javascript" async></script>
         <script src="{{ asset('js/assets/loader.js?v=' . config('app.version')) }}" type="text/javascript" async></script>
@@ -67,12 +67,36 @@
                 }
             });
         </script>
+        <script>
+            document.addEventListener('click', function (e) {
+                const btn = e.target.closest('[id^="click-cart-add-"]');
+                if (btn) {
+                    gtag('event', 'add_to_cart', {
+                        currency: 'MXN',
+                        value: parseFloat(btn.dataset.price),
+                        items: [{
+                            item_id: btn.dataset.sku,
+                            item_name: btn.dataset.name,
+                            price: parseFloat(btn.dataset.price),
+                            quantity: 1
+                        }]
+                    });
+                }
+            });
+        </script>
+        <script>
+            document.getElementById('dofinder-input').addEventListener('change', function (e) {
+                gtag('event', 'search', {
+                    search_term: e.target.value
+                });
+            });
+        </script>
         @endenv
     </head>
     <body>
         @yield('mobile')
         @sectionMissing('mobile')
-        @include('partials.mobile')
+        @include('partials.mobilebar')
         @endif
         <div class="content">
             <loader></loader>

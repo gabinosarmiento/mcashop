@@ -40,9 +40,11 @@ class Cart extends Controller
 
     public function index()
     {
-        $cart = Session::get('_cart');
+        $data = Session::get('_cart');
 
-        return view('cart.index', compact('cart'));
+        $data['menu'] = $this->menu_categories();
+
+        return view('cart.index', compact('data'));
     }
 
     /**
@@ -207,6 +209,8 @@ class Cart extends Controller
 
         // Load current cart payload from session
         $data = Session::get('_cart');
+
+        $data['menu'] = $this->menu_categories();
 
         // Load logged-in customer with shipping address + billing data
         $customer = CustomerModel::with('address', 'billing')->find(auth('customer')->id());

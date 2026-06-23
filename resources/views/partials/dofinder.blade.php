@@ -8,13 +8,13 @@
         </button>
     </div>
     <div class="dofinder-body">
-        <div class="dofinder-inner">
-            <div id="layout-dofinder">
-                <div id="dofinder-sidebar">
-                    <div class="dofinder-title">
-                        <i class="fal fa-bars-filter"></i>
-                        Filtros
-                    </div>
+        <div class="dofinder-wrap">
+            <div class="dofinder-sidebar">
+                <div class="dofinder-title">
+                    <i class="fal fa-bars-filter"></i>
+                    Filtros
+                </div>
+                <aside class="sidebar-mca">
                     <form id="dofilter-form">
                         <select name="order" class="form-select form-select-sm mb-2">
                             <option selected disabled>
@@ -33,19 +33,19 @@
                                 Precio máximo
                             </option>
                         </select>
-                        <nav class="sidebar-nav">
-                            <ul class="list-unstyled" id="dofilter-sidebar">
-                                @foreach($data['filter'] as $filter)
-                                <li class="sidebar-item">
-                                    <span class="sidebar-link sidebar-link-sm sidebar-caret" data-bs-target="#dofilter-submenu-{{ $filter['id'] }}" data-bs-toggle="collapse">
+                        <nav class="dofinder-nav">
+                            <ul class="list-unstyled" id="dofinder-sidebar">
+                                @foreach($data['filters'] as $filter)
+                                <li class="dofinder-item">
+                                    <span class="dofinder-link dofinder-caret" data-bs-target="#dofinder-submenu-{{ $filter['id'] }}" data-bs-toggle="collapse">
                                         {{ $filter['name'] }}
                                     </span>
-                                    <ul class="sidebar-submenu list-unstyled collapse" id="dofilter-submenu-{{ $filter['id'] }}" data-bs-parent="#dofilter-sidebar">
+                                    <ul class="dofinder-submenu collapse" id="dofinder-submenu-{{ $filter['id'] }}" data-bs-parent="#dofinder-sidebar">
                                         @foreach($filter['submenu'] as $submenu)
-                                        <li class="sidebar-sublink sidebar-sublink-sm">
-                                            <div class="form-check">
-                                                <input class="form-check-input" id="dofilter-{{ $loop->iteration }}-{{ $filter['id'] }}" name="filters[{{ $filter['id'] }}][]" type="checkbox" value="{{ $submenu['value'] }}">
-                                                <label class="form-check-label" for="dofilter-{{ $loop->iteration }}-{{ $filter['id'] }}">
+                                        <li class="dofinder-sublink">
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input" id="dofinder-{{ $loop->iteration }}-{{ $filter['id'] }}" name="filters[{{ $filter['id'] }}][]" type="checkbox" value="{{ $submenu['value'] }}">
+                                                <label class="form-check-label" for="dofinder-{{ $loop->iteration }}-{{ $filter['id'] }}">
                                                     {{ $submenu['value'] }}
                                                 </label>
                                             </div>
@@ -57,10 +57,10 @@
                             </ul>
                         </nav>
                     </form>
-                </div>
-                <div id="dofinder-content">
-                    @include('partials.doinner')
-                </div>
+                </aside>
+            </div>
+            <div class="dofinder-content">
+                @include('partials.dofinderitem')
             </div>
         </div>
     </div>

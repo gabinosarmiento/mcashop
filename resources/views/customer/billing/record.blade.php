@@ -7,7 +7,7 @@
 <div class="box box-blue">
     <div class="box-header">
         <div class="box-title">
-            <i class="fal fa-file"></i>
+            <i class="fas fa-file"></i>
         </div>
     </div>
     <div class="box-body">

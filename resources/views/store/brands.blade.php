@@ -1,7 +1,6 @@
 @extends('layouts.site')
 @section('title', 'MCAShop - Solo las mejores marcas')
 @section('description', 'Descubre las mejores marcas, seleccionadas cuidadosamente, para que siempre encuentres lo mejor a solo un clic de distancia.')
-@php($navbar_mobile = 'up.partials.navbar_mobile')
 @section('content')
 <div class="container">
     {{ Breadcrumbs::render('marcas') }}
