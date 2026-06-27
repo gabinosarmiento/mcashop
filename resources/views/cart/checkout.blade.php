@@ -1,6 +1,6 @@
 @extends('layouts.site')
 @section('content')
-<div class="wrapper-middle-bottom">
+<div class="wrapper-md-bottom">
     <div class="container">
         {{ Breadcrumbs::render('carrito/continuar') }}
         @guest('customer')

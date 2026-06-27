@@ -16,7 +16,7 @@ class AuthenticateCustomer
      */
     public function handle($request, Closure $next)
     {
-        if (! Auth::guard('customer')->check()) {
+        if (!Auth::guard('customer')->check()) {
             return redirect('cliente/acceso');
         }
 

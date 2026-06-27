@@ -53,6 +53,15 @@ if (!function_exists('surcharge_buildup')) {
     }
 }
 
+if (!function_exists('file_rename')) {
+   function file_rename($extension, $length = 32)
+   {
+      $random = bin2hex(random_bytes($length / 2));
+
+      return "{$random}.{$extension}";
+   }
+}
+
 if (!function_exists('str_folio')) {
     function str_folio($value, $prefix = '')
     {

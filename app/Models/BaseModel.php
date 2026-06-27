@@ -18,9 +18,4 @@ abstract class BaseModel extends Model
    {
       return new BuilderExtension($query);
    }
-
-   protected function serializeDate(DateTimeInterface $date): string
-   {
-      return $date->format('Y-m-d H:i:s');
-   }
 }

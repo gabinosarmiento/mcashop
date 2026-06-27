@@ -1,0 +1,155 @@
+/**
+ * Styles for mcashop.mx
+ *
+ * Provides a confirmation modal component built entirely
+ * with native DOM methods and classes, designed for
+ * Bootstrap-like styling without jQuery.
+ *
+ * Features:
+ * - Customizable title, message, and action buttons
+ * - Supports multiple actions with callbacks
+ * - No external dependencies
+ *
+ * @author   Gabino Sarmiento
+ * @updated  June 25, 2026
+ * @version  3.0
+ */
+
+/**
+ * Styles for mcashop.mx
+ *
+ * Provides a confirmation modal component built entirely
+ * with native DOM methods and classes, designed for
+ * Bootstrap-like styling without jQuery.
+ *
+ * Features:
+ * - Customizable title, message, and action buttons
+ * - Supports multiple actions with callbacks
+ * - No external dependencies
+ *
+ * @author   Gabino Sarmiento
+ * @updated  June 25, 2026
+ * @version  3.0
+ */
+
+.confirm-action-overlay {
+    --confirm-overlay: #00000033;
+    inset: 0;
+    opacity: 0;
+    position: fixed;
+    background-color: var(--confirm-overlay);
+    transition: opacity .3s ease;
+    z-index: 1079;
+}
+.confirm-action-overlay.show {
+    opacity: 1;
+}
+.confirm-action-modal {
+    --confirm-top: 50%;
+    --confirm-right: auto;
+    --confirm-bottom: auto;
+    --confirm-left: 50%;
+    --confirm-transform: translate(-50%, -50%);
+    --confirm-width: 300px;
+    --confirm-radius: 24px;
+    --confirm-btn-radius: 14px;
+    --confirm-bg: #fff;
+    top: var(--confirm-top);
+    right: var(--confirm-right);
+    bottom: var(--confirm-bottom);
+    left: var(--confirm-left);
+    width: var(--confirm-width);
+    font-size: 14px;
+    position: fixed;
+    text-align: center;
+    overflow: hidden;
+    border-radius: var(--confirm-radius);
+    background-color: var(--confirm-bg);
+    transform: var(--confirm-transform);
+    z-index: 1080;
+}
+.confirm-action-modal-header {
+    padding: 15px 20px 0;
+}
+.confirm-action-modal-title {
+    --confirm-title-color: #777;
+    margin-bottom: 0;
+    color: var(--confirm-title-color);
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+}
+.confirm-action-modal-content {
+    --confirm-message-color: #888;
+    padding: 15px 20px;
+    color: var(--confirm-message-color);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1;
+}
+.confirm-action-modal-actions {
+    --confirm-footer-bg: #f6f6f6;
+    gap: 0.5rem;
+    display: flex;
+    padding: 15px 20px;
+    justify-content: center;
+    background-color: var(--confirm-footer-bg);
+    border-radius: 0 0 var(--confirm-radius) var(--confirm-radius);
+}
+.confirm-action-modal-button {
+    --confirm-button-color: #6c757d;
+    --confirm-button-bg: #ffffff;
+    --confirm-button-border: #ffffff;
+    --confirm-button-hover-color: #495057;
+    --confirm-button-hover-bg: #ececec;
+    --confirm-button-hover-border: #ececec;
+    color: var(--confirm-button-color);
+    background: var(--confirm-button-bg);
+    border: 1px solid var(--confirm-button-border);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    padding: 10px 12px;
+    border-radius: var(--confirm-btn-radius);
+    cursor: pointer;
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease;
+}
+.confirm-action-modal-button:hover {
+    color: var(--confirm-button-hover-color);
+    background-color: var(--confirm-button-hover-bg);
+    border-color: var(--confirm-button-hover-border);
+}
+.confirm-action-modal-title.danger {
+    --confirm-title-color: #dc3545;
+}
+.confirm-action-modal-title.warning {
+    --confirm-title-color: #ffc107;
+}
+.confirm-action-modal-title.success {
+    --confirm-title-color: #28a745;
+}
+.confirm-action-modal-button.danger {
+    --confirm-button-color: #842029;
+    --confirm-button-bg: #f8d7da;
+    --confirm-button-border: #f8d7da;
+    --confirm-button-hover-color: #842029;
+    --confirm-button-hover-bg: #f1aeb5;
+    --confirm-button-hover-border: #f1aeb5;
+}
+.confirm-action-modal-button.warning {
+    --confirm-button-color: #664d03;
+    --confirm-button-bg: #fff3cd;
+    --confirm-button-border: #ffecb5;
+    --confirm-button-hover-color: #664d03;
+    --confirm-button-hover-bg: #ffe69c;
+    --confirm-button-hover-border: #ffda6a;
+}
+.confirm-action-modal-button.success {
+    --confirm-button-color: #0f5132;
+    --confirm-button-bg: #d1e7dd;
+    --confirm-button-border: #badbcc;
+    --confirm-button-hover-color: #0f5132;
+    --confirm-button-hover-bg: #a3cfbb;
+    --confirm-button-hover-border: #75b798;
+}

@@ -11,9 +11,6 @@ body {
     font-weight: 400;
     background-color: #ffffff;
 }
-main {
-    flex: 1;
-}
 a {
     color: var(--mca-main-color);
     text-decoration: none;
@@ -27,18 +24,10 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     box-shadow: none;
 }
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
     font-family: Nunito, sans-serif;
     line-height: 1.3;
     color: inherit;
-}
-loader, process {
-    inset: 0;
-    position: fixed;
-    z-index: 9999;
-    background: center no-repeat url('assets/radar.svg');
-}
-loader {
-    background-color: rgba(255, 255, 255, .8);
 }
 /* --------------------------------------------------------------------------
    Layout
@@ -50,7 +39,8 @@ loader {
     flex-direction: column;
 }
 .logo {
-    width: 168px;
+    height: 38px;
+    width: auto;
 }
 .layout-mca {
     display: grid;
@@ -59,22 +49,6 @@ loader {
 }
 .content-mca {
     padding-left: 30px;
-}
-/* --------------------------------------------------------------------------
-   Spacing wrappers
-   -------------------------------------------------------------------------- */
-
-.wrapper {
-    padding-block: 50px;
-}
-.wrapper-bottom {
-    padding-bottom: 50px;
-}
-.wrapper-middle {
-    padding-block: 30px;
-}
-.wrapper-middle-bottom {
-    padding-bottom: 30px;
 }
 /* --------------------------------------------------------------------------
    Images
@@ -128,18 +102,6 @@ loader {
     --bs-card-spacer-y: 0.75rem;
     --bs-card-spacer-x: 0.75rem;
 }
-.dropdown-menu {
-    --bs-dropdown-padding-y: 0.25rem;
-    --bs-dropdown-padding-x: 0.25rem;
-    padding: var(--bs-dropdown-padding-y) var(--bs-dropdown-padding-x);
-    border-radius: var(--bs-border-radius-md);
-}
-.dropdown-item {
-    --bs-dropdown-item-padding-y: 0.5rem;
-    --bs-dropdown-item-padding-x: 0.75rem;
-    padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
-    border-radius: var(--bs-border-radius-xl);
-}
 .dropdown-item:hover, .dropdown-item:focus {
     color: var(--bs-dropdown-link-hover-color);
     background-color: var(--bs-dropdown-link-hover-bg);
@@ -153,14 +115,30 @@ loader {
     border-left: .3em solid;
 }
 /* --------------------------------------------------------------------------
+   Dropdown submenu
+   -------------------------------------------------------------------------- */
+
+.dropdown-node {
+    position: relative;
+}
+.submenu {
+    top: 0;
+    left: 100%;
+    display: none;
+    margin-top: 0;
+}
+.dropdown-node:hover>.submenu {
+    display: block;
+}
+/* --------------------------------------------------------------------------
    Navbar
    -------------------------------------------------------------------------- */
 
 .nav-mca {
     align-items: center;
+    gap: 1rem;
 }
 .navbar-mca {
-    padding-block: 0.625rem;
     background-color: var(--mca-main-color);
 }
 .navbar-mca .navbar-toggler {
@@ -184,11 +162,6 @@ loader {
     padding-block: 0.5rem;
     box-shadow: 0 2px 10px #00000033;
 }
-.navbar-avatar {
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-}
 .fa-nav {
     font-size: 1.125rem;
 }
@@ -207,85 +180,22 @@ loader {
 .badge-product {
     margin-bottom: .375rem;
 }
-/* --------------------------------------------------------------------------
-   Dropdown submenu
-   -------------------------------------------------------------------------- */
-
-.dropdown-node {
-    position: relative;
+.wrapper-pagination {
+    align-items: center;
 }
-.submenu {
-    top: 0;
-    left: 100%;
-    display: none;
-    margin-top: 0;
-}
-.dropdown-node:hover>.submenu {
-    display: block;
-}
-/* --------------------------------------------------------------------------
-   Sidebar
-   -------------------------------------------------------------------------- */
-
-.sidebar-nav {
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 16px;
-    padding: 0.25rem;
-    padding-left: 0;
-    list-style: none;
-    background-color: #ffffff;
-    background-clip: border-box;
-    border: 1px solid #ebebeb;
-    border-radius: var(--bs-border-radius-xl);
-}
-.sidebar-nav .collapse {
-    visibility: visible;
-}
-.sidebar-link {
-    display: block;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    padding: 0.5rem 1.25rem 0.5rem 0.75rem;
-    line-height: 1.5;
-    color: var(--bs-body-color);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    border-radius: var(--bs-border-radius-lg);
-}
-.sidebar-link:hover, .sidebar-link[aria-expanded="true"] {
-    color: #343a40;
-    background-color: #f8f8f8;
-}
-.sidebar-link.active {
-    color: var(--mca-main-color);
-}
-.sidebar-caret::after {
-    content: "";
-    width: 12px;
-    height: 12px;
-    right: 8px;
-    top: 50%;
-    position: absolute;
-    background-image: url('assets/caret.svg');
-    background-size: 12px 12px;
-    background-repeat: no-repeat;
-    transform: translateY(-50%);
-    transition: transform .3s;
-}
-.sidebar-caret[aria-expanded="true"]::after {
-    transform: translateY(-50%) rotate(90deg);
-}
-.sidebar-sublink {
-    display: block;
-    position: relative;
-    padding: 6px 14px;
-    font-size: 0.875rem;
-    color: #6c757d;
-}
-.sidebar-sublink:hover, .sidebar-sublink.sidebar-caret:not(.collapsed) {
-    color: var(--mca-main-color);
+.pagination {
+    --bs-pagination-border-color: var(--bs-primary-bg-subtle);
+    --bs-pagination-hover-color: var(--bs-primary-text-emphasis);
+    --bs-pagination-hover-bg: var(--bs-primary-bg-subtle);
+    --bs-pagination-hover-border-color: var(--bs-primary-bg-subtle);
+    --bs-pagination-focus-color: var(--bs-primary-text-emphasis);
+    --bs-pagination-focus-bg: var(--bs-primary-bg-subtle);
+    --bs-pagination-active-color: var(--bs-primary-text-emphasis);
+    --bs-pagination-active-bg: var(--bs-primary-bg-subtle);
+    --bs-pagination-active-border-color: var(--bs-primary-bg-subtle);
+    --bs-pagination-disabled-color: var(--bs-secondary-color);
+    --bs-pagination-disabled-bg: var(--bs-white);
+    --bs-pagination-disabled-border-color: var(--bs-border-color);
 }
 /* --------------------------------------------------------------------------
    Grids
@@ -368,15 +278,6 @@ loader {
     text-overflow: ellipsis;
     background-color: #e9ecef;
     border-top: none;
-}
-.version {
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 /* --------------------------------------------------------------------------
    Product cards

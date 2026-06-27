@@ -4,7 +4,7 @@
     <div class="col-md-6 bg-image-customer"></div>
     <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
         <div class="col-sesion text-center">
-            <div class="logo mx-auto mb-4">
+            <div class="mx-auto mb-4">
                 <a href="{{ route('inicio') }}">
                     <img src="{{ asset('images/logo.svg') }}" class="img-fluid" alt="MCAShop" width="200"/>
                 </a>
@@ -23,7 +23,7 @@
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="session-tab" role="tabpanel" aria-labelledby="session-tab-button" tabindex="0">
-                    <form id="ajax-customer-validate-form" data-action="{{ route('cliente/acceso/validar') }}" data-method="post">
+                    <form id="ajax-customer-form" data-action="{{ route('cliente/acceso/validar') }}" data-method="post">
                         @csrf
                         <div class="mb-2">
                             <label class="visually-hidden" for="login-email">

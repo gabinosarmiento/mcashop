@@ -1,10 +1,10 @@
 <nav class="navbar navbar-mca navbar-expand-lg">
-    <div class="container gap-2 gap-lg-4">
+    <div class="container gap-2">
         <button type="button" id="sidebar-open" class="navbar-toggler" title="Menú" data-bs-toggle="offcanvas" data-bs-target="#mobile-sidebar" aria-controls="mobile-sidebar">
             <i class="fal fa-bars"></i>
         </button>
         <a href="{{ route('inicio') }}">
-            <img src="{{ asset('images/logo_white.svg') }}" class="logo" alt="mcashop" width="168"/>
+            <img src="{{ asset('images/logo_white.svg') }}" class="logo" alt="mcashop" height="38"/>
         </a>
         <ul class="nav nav-mca ms-lg-auto">
             @auth('customer')
@@ -13,7 +13,7 @@
                     <span class="d-none d-sm-inline-block">
                         {{ auth('customer')->user()->name }}
                     </span>
-                    <img class="navbar-avatar" src="{{ url('images/avatar.webp') }}" width="28" height="28" alt="..."/>
+                    <img class="navbar-avatar" src="{{ asset('images/avatar.webp') }}" width="28" height="28" alt="..."/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="{{ route('cliente/cuenta') }}" aria-label="Ver cuenta">

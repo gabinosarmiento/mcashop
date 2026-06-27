@@ -54,14 +54,6 @@ class ProductModel extends BaseModel
    }
 
    /**
-    * Get the documents records associated with the product.
-    */
-   public function documents()
-   {
-      return $this->hasMany(ProductDocumentModel::class, 'product_id');
-   }
-
-   /**
     * Get the images records associated with the product.
     */
    public function images()

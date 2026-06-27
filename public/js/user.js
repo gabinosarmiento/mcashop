@@ -14,7 +14,7 @@
         run: element => ajax_request(element)
     }, {
         selector: '[id^="delete-"]',
-        run: (element, e) => confirm_action(element, e, '¿Deseas eliminar el registro?')
+        run: (element, e) => confirm_action(element, e, '¿Deseas *eliminar* el registro?')
     }, {
         selector: '[id^="cancel-"]',
         run: (element, e) => confirm_action(element, e, '¿Deseas cancelar el registro?')
@@ -218,8 +218,8 @@
                 document.body.notification({ body: result.message });
             }
 
-            if (result.render) {
-                render_action(result.render);
+            if (result.update) {
+                update_action(result.update);
             }
 
             if (instance.overlapShow) {
@@ -294,7 +294,7 @@
         return true;
     }
 
-    function render_action(render) {
+    function update_action(render) {
         Object.keys(render).forEach(function(id) {
             var element = document.getElementById(id);
 

@@ -1,6 +1,6 @@
 @extends('layouts.site')
 @section('content')
-<div class="wrapper-middle">
+<div class="wrapper-md">
     <div class="container">
         <div class="row">
             <div class="col">

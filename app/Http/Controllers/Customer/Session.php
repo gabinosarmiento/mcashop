@@ -36,9 +36,7 @@ class Session extends Controller
         $user = Auth::guard('customer')->getProvider()->retrieveByCredentials($credentials);
 
         if ($user && $user->status === 'Cancelado') {
-            throw ValidationException::withMessages([
-                'email' => [trans('auth.cancelled')],
-            ]);
+            throw ValidationException::withMessages(['email' => [trans('auth.cancelled')]]);
         }
 
         if (Auth::guard('customer')->attempt($credentials, $request->filled('remember'))) {
@@ -47,9 +45,7 @@ class Session extends Controller
             return response(['redirect' => route($this->redirectTo)], 200);
         }
 
-        throw ValidationException::withMessages([
-            'email' => [trans('auth.failed')],
-        ]);
+        throw ValidationException::withMessages(['email' => [trans('auth.failed')]]);
     }
 
     /**

@@ -8,6 +8,7 @@
 /public/hot
 /public/storage
 
+/public/images/users/*
 /public/images/brands/*
 /public/images/categories/*
 /public/images/products/*
