@@ -1,0 +1,13 @@
+<?php
+
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::channel('assistant.process', function ($user) {
+    return ['id' => $user->id];
+});
+
+Broadcast::channel('assistant.command', function ($user) {
+    return ['id' => $user->id];
+});
+
+Broadcast::channel('test', fn () => true);

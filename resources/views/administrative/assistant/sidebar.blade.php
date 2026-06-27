@@ -50,7 +50,7 @@
         </li>
         <li>
             <a class="sidebar-link" href="{{ route('administrativo/auxiliar/proceso') }}">
-                <i class="fal fa-min fa-bars-progress"></i>
+                <i class="fa-light fa-diagram-subtask"></i>
                 Procesos
             </a>
         </li>

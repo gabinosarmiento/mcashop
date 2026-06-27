@@ -41,15 +41,15 @@
                 </button>
             </li>
             <li>
-                <button class="dropdown-item" id="action-product-icecat-{{ $data['id'] }}" data-route="icecat?{{ request()->withQuery(['id' =>$data['id']]) }}" data-overlap-hide="#overapp">
-                    <i class="fal fa-cube"></i>
-                    Icecat
-                </button>
-            </li>
-            <li>
                 <button class="dropdown-item" id="action-product-publish-{{ $data['id'] }}" data-route="publicar?{{ request()->withQuery(['id' =>$data['id']]) }}" data-overlap-hide="#overapp">
                     <i class="fal fa-store"></i>
                     Publicar
+                </button>
+            </li>
+            <li>
+                <button class="dropdown-item dropdown-item-primary" id="action-product-icecat-{{ $data['id'] }}" data-route="icecat?{{ request()->withQuery(['id' =>$data['id']]) }}" data-overlap-hide="#overapp">
+                    <i class="fal fa-cube"></i>
+                    Icecat
                 </button>
             </li>
             <li>

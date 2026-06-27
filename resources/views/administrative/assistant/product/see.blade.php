@@ -19,21 +19,19 @@
             </div>
             <div class="tab-pane fade" id="images-tab" role="tabpanel">
                 <form id="change-image-form" data-method="post" data-route="imagen/guardar" data-reset="true">
-                    {{ csrf_field() }}
+                    @csrf
                     <input type="hidden" name="product_id" value="{{ $data['id'] }}"/>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" id="image" name="image" class="d-none"/>
-                                <label class="btn btn-outline-mca" for="image">
-                                    <i class="fal fa-image"></i>
-                                    Imagen
-                                </label>
-                            </div>
-                        </div>
+                    <input type="file" id="image" name="image" class="d-none"/>
+                    <div class="mb-2">
+                        <label class="btn btn-outline-secondary" for="image">
+                            <i class="fal fa-image"></i>
+                            Imagen
+                        </label>
                     </div>
                 </form>
-                <div id="images-inner"></div>
+                <div id="images">
+                    @include('administrative.assistant.product.images')
+                </div>
             </div>
         </div>
     </div>

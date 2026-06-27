@@ -503,21 +503,19 @@ loader {
 /* -----------------------------------------------------------------------------
    Status
    ----------------------------------------------------------------------------- */
+
 .Borrador {
     --bs-table-color: #f87c63;
     color: var(--bs-table-color);
 }
-
 .Pausado {
     --bs-table-color: #c82909;
     color: var(--bs-table-color);
 }
-
 .Fallido {
     --bs-table-color: #dc3545;
     color: var(--bs-table-color);
 }
-
 .Cancelado {
     --bs-table-color: #f4320b;
     color: var(--bs-table-color);
@@ -560,7 +558,6 @@ loader {
 /* -----------------------------------------------------------------------------
    Responsive
    ----------------------------------------------------------------------------- */
-
 @media (min-width: 576px) {
     .box-sm-end {
         justify-content: flex-end;

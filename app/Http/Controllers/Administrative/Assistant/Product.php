@@ -93,7 +93,11 @@ class Product extends Assistant
         do {
             $query = ProductModel::query()->orderByDesc('id');
 
-            if ($request->search) {
+            if (isset($request->status)) {
+                $query->where('status', $request->status);
+            }
+
+            if (isset($request->search)) {
                 $query->whereRaw('concat_ws(" ", id, sku, name) like ?', ["%{$request->search}%"])->orderByRaw('sku, name');
             }
 

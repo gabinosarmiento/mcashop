@@ -12,13 +12,3 @@ window.Echo = new Echo({
     forceTLS: import.meta.env.VITE_REVERB_SCHEME === "https",
     enabledTransports: ["ws", "wss"],
 });
-
-const cartToken = document
-    .querySelector('meta[name="cart-token"]')
-    .getAttribute("content");
-
-window.Echo.channel("cart." + cartToken).listen(".CartEvent", function (e) {
-    const cartBadge = document.getElementById("cart");
-
-    cartBadge.innerHTML = e.cartItems;
-});

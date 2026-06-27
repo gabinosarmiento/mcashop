@@ -3,8 +3,14 @@
 use App\Http\Controllers\Administrative\Administration;
 use App\Http\Controllers\Administrative\Administration\Administrative;
 use App\Http\Controllers\Administrative\Assistant;
+use App\Http\Controllers\Administrative\Assistant\Attribute;
+use App\Http\Controllers\Administrative\Assistant\Brand;
+use App\Http\Controllers\Administrative\Assistant\Category;
+use App\Http\Controllers\Administrative\Assistant\Feature;
 use App\Http\Controllers\Administrative\Assistant\Health;
+use App\Http\Controllers\Administrative\Assistant\Process;
 use App\Http\Controllers\Administrative\Assistant\Product;
+use App\Http\Controllers\Administrative\Assistant\Supplier;
 use App\Http\Controllers\Administrative\Dashboard;
 use App\Http\Controllers\Administrative\Sale;
 use App\Http\Controllers\Administrative\Sale\Shipping;
@@ -24,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 Route::permanentRedirect('/', '/inicio');
 
 Route::get('inicio', [Site::class, 'index'])->name('inicio');
+Route::get('marcas', [Store::class, 'brands'])->name('marcas');
 Route::get('marca/{value}/{slug}', [Store::class, 'brand'])->name('marca');
 Route::get('categorias/{value}/{slug}', [Store::class, 'categories'])->name('categorias');
 Route::get('categoria/{value}/{slug}', [Store::class, 'category'])->name('categoria');
@@ -152,25 +159,24 @@ Route::group(['middleware' => 'authenticate_administrative'], function () {
 
                 Route::get('administrativo/eliminar', [Administrative::class, 'delete'])->name('administrativo/eliminar');
 
-
-
-
-
-
-
-                Route::get('producto/prompt/{id}', [Product::class, 'prompt'])->name('producto/prompt');
-                Route::get('producto/icecat/{id}', [Product::class, 'icecat'])->name('producto/icecat');
+                Route::get('producto/prompt', [Product::class, 'prompt'])->name('producto/prompt');
+                Route::get('producto/icecat', [Product::class, 'icecat'])->name('producto/icecat');
                 Route::get('producto/publicando', [Product::class, 'publishing'])->name('producto/publicando');
-                Route::get('producto/publicar/{id}', [Product::class, 'publish'])->name('producto/publicar');
+                Route::get('producto/publicar', [Product::class, 'publish'])->name('producto/publicar');
                 Route::get('salud', [Health::class, 'index'])->name('salud');
                 Route::get('salud/test', [Health::class, 'test'])->name('salud/test');
 
-                Route::get('categoria', ['as' => 'categoria', 'uses' => 'Category@index']);
-                Route::get('marca', ['as' => 'marca', 'uses' => 'Brand@index']);
-                Route::get('proveedor', ['as' => 'proveedor', 'uses' => 'Supplier@index']);
-                Route::get('caracteristica', ['as' => 'caracteristica', 'uses' => 'Feature@index']);
-                Route::get('atributo', ['as' => 'atributo', 'uses' => 'Attribute@index']);
-                Route::get('proceso', ['as' => 'proceso', 'uses' => 'Process@index']);
+                Route::get('categoria', [Category::class, 'index'])->name('categoria');
+                Route::get('marca', [Brand::class, 'index'])->name('marca');
+                Route::get('proveedor', [Supplier::class, 'index'])->name('proveedor');
+                Route::get('caracteristica', [Feature::class, 'index'])->name('caracteristica');
+                Route::get('atributo', [Attribute::class, 'index'])->name('atributo');
+
+                Route::get('proceso', [Process::class, 'index'])->name('proceso');
+                Route::get('proceso/ver', [Process::class, 'see'])->name('proceso/ver');
+                Route::get('proceso/cancelar', [Process::class, 'cancel'])->name('proceso/cancelar');
+                Route::get('proceso/reintentar', [Process::class, 'retry'])->name('proceso/reintentar');
+                Route::get('proceso/ejecutar', [Process::class, 'execute'])->name('proceso/ejecutar');
             });
 
             Route::get('venta', [Sale::class, 'index'])->name('venta');

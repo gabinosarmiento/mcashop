@@ -43,12 +43,10 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     width: auto;
 }
 .layout-mca {
+    gap: 30px;
     display: grid;
     position: relative;
-    grid-template-columns: 20% 80%;
-}
-.content-mca {
-    padding-left: 30px;
+    grid-template-columns: 1fr 4fr;
 }
 /* --------------------------------------------------------------------------
    Images
@@ -202,8 +200,8 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
    -------------------------------------------------------------------------- */
 
 .grid {
-    display: grid;
     gap: 0.5rem;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 .grid-section {
@@ -216,56 +214,15 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
     grid-template-columns: repeat(10, 1fr);
 }
 .grid-brands {
-    gap: 1rem;
-    padding-bottom: 50px;
     grid-template-columns: repeat(10, 1fr);
-}
-.grid-brands:last-child {
-    padding-bottom: 0;
-}
-.grid-cols-1 {
-    grid-template-columns: repeat(1, 1fr);
-}
-.grid-cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-.grid-cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
-.grid-cols-4 {
-    grid-template-columns: repeat(4, 1fr);
-}
-.grid-cols-5 {
-    grid-template-columns: repeat(5, 1fr);
-}
-.grid-cols-6 {
-    grid-template-columns: repeat(6, 1fr);
-}
-.grid-cols-7 {
-    grid-template-columns: repeat(7, 1fr);
-}
-.grid-cols-8 {
-    grid-template-columns: repeat(8, 1fr);
-}
-.grid-cols-9 {
-    grid-template-columns: repeat(9, 1fr);
-}
-.grid-cols-10 {
-    grid-template-columns: repeat(10, 1fr);
-}
-.grid-cols-11 {
-    grid-template-columns: repeat(11, 1fr);
-}
-.grid-cols-12 {
-    grid-template-columns: repeat(12, 1fr);
 }
 /* --------------------------------------------------------------------------
    Categories / Brands
    -------------------------------------------------------------------------- */
-
+/*
 .grid-categories a {
     color: #646d75;
-}
+}*/
 .footer-categories {
     bottom: 0;
     width: 100%;
@@ -593,10 +550,7 @@ footer a:hover {
         margin-left: 0;
     }
     .layout-mca {
-        grid-template-columns: 100%;
-    }
-    .content-mca {
-        padding-left: 0;
+        grid-template-columns: 1fr;
     }
     .grid-categories {
         grid-template-columns: repeat(5, 1fr);
